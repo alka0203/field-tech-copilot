@@ -1,0 +1,40 @@
+<!--
+Label Studio Community project config: image classification + brand/model/code
+text fields in one interface, for eval-set labeling.
+
+Usage:
+  label-studio start
+  Create project -> Labeling Setup -> Custom template -> paste this file.
+-->
+<View>
+  <Image name="image" value="$image_url" zoom="true"/>
+
+  <Header value="Image type"/>
+  <Choices name="image_type" toName="image" choice="single">
+    <Choice value="unit"/>
+    <Choice value="nameplate"/>
+    <Choice value="error_display"/>
+    <Choice value="other"/>
+  </Choices>
+
+  <Header value="Legible?"/>
+  <Choices name="legible" toName="image" choice="single">
+    <Choice value="yes"/>
+    <Choice value="no"/>
+  </Choices>
+
+  <Header value="Brand"/>
+  <TextArea name="brand" toName="image" rows="1" editable="true" maxSubmissions="1"/>
+
+  <Header value="Model text (as printed)"/>
+  <TextArea name="model_text" toName="image" rows="1" editable="true" maxSubmissions="1"/>
+
+  <Header value="Error code (if visible)"/>
+  <TextArea name="error_code" toName="image" rows="1" editable="true" maxSubmissions="1"/>
+
+  <Header value="Relevant to this project?"/>
+  <Choices name="is_relevant" toName="image" choice="single">
+    <Choice value="true"/>
+    <Choice value="false"/>
+  </Choices>
+</View>

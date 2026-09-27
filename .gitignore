@@ -1,0 +1,27 @@
+# Raw downloaded/scraped content never gets committed — only manifests + generators do.
+data/raw/
+data/cache/
+*.pdf
+*.jpg
+*.jpeg
+*.png
+!data/synth/**/*.png
+!eval/samples/**/*.png
+
+# Env / secrets
+.env
+.env.*
+*.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Label Studio local state
+label-studio-data/
+
+# OS
+.DS_Store

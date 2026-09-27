@@ -1,0 +1,67 @@
+# Single source of truth for what this pipeline collects.
+# Vertical: HVAC. Brands chosen for crawlable manual portals + explicit error-code docs.
+
+vertical: hvac
+
+brands:
+  - name: daikin
+    display_name: Daikin
+    model_families: [FTXS, FTKF, RXS, VRV, Skyair]
+    manuals:
+      portal_type: js          # needs Playwright/Crawl4AI, not a static spider
+      seeds:
+        - https://www.daikinac.com/resource-center/
+        - https://www.daikin.com/support/faq/
+      pdf_url_patterns:
+        - "backend.daikincomfort.com/*/servicemanual/*.pdf"
+    notes: "Simple Self-Diagnosis by Malfunction Code PDF is the primary error-code source."
+
+  - name: mitsubishi
+    display_name: Mitsubishi Electric
+    model_families: [MSZ, MUZ, MXZ, PUZ]
+    manuals:
+      portal_type: static      # direct PDF links, folder-style listing
+      seeds:
+        - https://meus1.mylinkdrive.com/
+        - https://nonul.mylinkdrive.com/
+      pdf_url_patterns:
+        - "meus1.mylinkdrive.com/files/*.pdf"
+        - "nonul.mylinkdrive.com/files/*_Service_Manual.pdf"
+    notes: "Newer R-454B docs moving to 'HVAC Pro' (may require sign-in) — spider should fail loudly, not silently skip."
+
+  - name: carrier
+    display_name: Carrier
+    model_families: [40MAQ, 38MAQB, 25HCE]
+    manuals:
+      portal_type: static
+      seeds:
+        - https://www.shareddocs.com/hvac/docs/1009/Public/
+      pdf_url_patterns:
+        - "shareddocs.com/hvac/docs/1009/Public/*.pdf"
+    notes: "Copyright Carrier Corp, no redistribution grant — manifest + hash only, never commit the PDF."
+
+# Query fan-out template for image collection.
+# Rendered as: "{brand} {model_family} {query_type}"
+image_query_types:
+  - nameplate
+  - rating plate
+  - data plate
+  - error code display
+  - remote controller error
+  - inverter LCD fault
+  - outdoor unit
+
+# Providers tried in this order (free first).
+image_providers:
+  - openverse      # free, no key required for low volume
+  - wikimedia       # free, set a descriptive User-Agent
+  - brave           # paid, requires BRAVE_API_KEY
+  - serpapi         # paid, requires SERPAPI_API_KEY
+
+own_photos_target: 25   # phone photos of real units — the "gold" subset
+
+licensing:
+  images_committed: false      # never commit scraped image bytes
+  manuals_committed: false     # never commit manufacturer PDFs
+  manifests_committed: true    # url, sha256, license, retrieval_date, labels
+  own_photos_license: "CC BY 4.0"
