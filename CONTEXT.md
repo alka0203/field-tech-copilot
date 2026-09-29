@@ -140,8 +140,8 @@ data or paid API.
 ## 6. Phase progress checklist
 
 - [x] Phase 1, Step 1 — Problem statement written and confirmed by user (2026-09-29). See Section 1 above.
-- [x] Phase 1, Step 2 — 10-15 example use-cases written (2026-09-29). See Section 9. **Awaiting user review before Step 3.**
-- [ ] Phase 1, Step 3 — Done/good definition + measurable success metric
+- [x] Phase 1, Step 2 — 10-15 example use-cases written (2026-09-29). See Section 9.
+- [x] Phase 1, Step 3 — Done/good definition + measurable success metric written (2026-09-29). See Section 10. **Awaiting user review before Step 4.**
 - [ ] Phase 1, Step 4 — Constraints/assumptions doc
 - [ ] Phase 2, Steps 5-7 — Hands-on data exploration, data-notes, clean data model
 - [ ] Phase 3, Steps 8-11 — Architecture diagram, tech-choice rationale, riskiest-part identification, failure/safety design
@@ -181,10 +181,41 @@ Grounded in `sources.yaml` model families. Labels in brackets are for eval desig
 
 ---
 
+## 10. Phase 1, Step 3 — "Done" and "good" definition
+
+### Must-haves (the bar for calling this project done)
+
+1. **Nameplate ID works** — given a phone photo of an HVAC nameplate, returns the correct manufacturer and model family. Full model-number precision is nice-to-have; family-level is the bar.
+2. **Error-code decode works** — given manufacturer + model + error code, returns fault description + likely causes + remedy steps, grounded in the manufacturer's own service manual (not a web guess).
+3. **Honest on ignorance** — when data is absent or the question is out of scope, the system says so rather than hallucinating. Edge cases #11 and #14 in Section 9 are the specific tests for this.
+4. **Eval script runs and records a score** — the 15 use-cases from Step 2 are wired into an actual runnable script; results are written down, not eyeballed.
+5. **Handoff doc exists** — a zero-context reader can understand what it is, run it locally, and read the eval results.
+
+### Nice-to-haves (cut if time-pressured)
+
+- Full model-number precision beyond family (e.g. `FTXS35LVMA` vs. just `FTXS`)
+- All three brands working end-to-end (one brand fully working is the demo bar; two or three is the stretch)
+- Any UI beyond a raw API call
+- Latency optimization
+- Auth, rate limiting, or uptime guarantees
+
+### Measurable success metrics
+
+| Category | Bar | Stretch |
+|---|---|---|
+| Exact cases (5 questions) | ≥ 4/5 correct once manual data is ingested | 5/5 |
+| Edge cases (6 questions) | ≥ 4/6 handled correctly (right answer OR correct refusal to answer) | 6/6 |
+| Fuzzy cases (4 questions) | Qualitative pass: diagnostic path matches what a service manual would recommend | — |
+
+**Definition of "correct" for exact cases:** fault name + at least one correct likely cause, matching the manufacturer's own manual text. A confidently wrong answer that contradicts the manual = failure. A correct refusal ("I don't have data for this model/code") = pass.
+
+---
+
 ## 7. Decisions log
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-09-29** — Phase 1 Step 3 complete (pending user review): defined must-haves vs. nice-to-haves and three measurable success metrics (exact ≥4/5, edge ≥4/6, fuzzy qualitative). Audience-driven: auth/uptime/UI are explicitly nice-to-have given portfolio context.
 - **2026-09-29** — Phase 1 Step 2 complete (pending user review): 15 use-cases written, grounded in `sources.yaml` model families, covering 5 exact, 4 fuzzy, and 6 edge/mixed cases. These become the eval seed set in Phase 4 Step 15.
 - **2026-09-29** — Rewrote this file to be fully self-contained (methodology primer inlined, full repo inventory with proof status, explicit checklist) so a fresh session/window with zero chat history can pick this up without re-deriving anything. Prompted by user request.
 - **2026-09-29** — Confirmed audience is portfolio/FDE-interview-prep, not a real production tool. Shifts done/good (Step 3, still pending) toward eval quality + writeup over auth/scale/uptime.
@@ -200,9 +231,8 @@ Grounded in `sources.yaml` model families. Labels in brackets are for eval desig
 
 ## 8. Next action
 
-**Phase 1, Step 2 use-cases are drafted (Section 9) — awaiting user review.**
+**Phase 1, Step 3 done/good definition drafted (Section 10) — awaiting user review.**
 
-Once confirmed, next is **Phase 1, Step 3: define "done" and "good"** —
-must-haves vs. nice-to-haves, plus at least one measurable success metric
-(e.g. % of exact-case questions answered correctly against the eval set).
-Do not start Step 3 without explicit go-ahead.
+Once confirmed, next is **Phase 1, Step 4: write the constraints/assumptions doc** —
+data volume, where it runs, budget, privacy, and real audience. Do not start Step 4
+without explicit go-ahead.
