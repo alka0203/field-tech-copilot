@@ -143,8 +143,8 @@ data or paid API.
 - [x] Phase 1, Step 2 — 10-15 example use-cases written (2026-09-29). See Section 9.
 - [x] Phase 1, Step 3 — Done/good definition + measurable success metric written (2026-09-29). See Section 10.
 - [x] Phase 1, Step 4 — Constraints/assumptions doc written (2026-09-29). See Section 11. **Awaiting user review before Phase 2.**
-- [x] Phase 2, Step 5 — Hands-on portal exploration run (2026-09-29). See Section 12. **Awaiting user review before Step 6.**
-- [ ] Phase 2, Step 6 — Data-notes: observations paired with decisions
+- [x] Phase 2, Step 5 — Hands-on portal exploration run (2026-09-29). See Section 12.
+- [x] Phase 2, Step 6 — Data-notes written (2026-09-29). See Section 13. **One open question for user: Carrier model families (see Section 13). Awaiting review before Step 7.**
 - [ ] Phase 2, Step 7 — Clean target data model
 - [ ] Phase 3, Steps 8-11 — Architecture diagram, tech-choice rationale, riskiest-part identification, failure/safety design
 - [ ] Phase 4, Step 12 — Skeleton (**this part is actually already done** — see Section 5 — but was built out of order, before Phase 1-3; revisit once Phase 1-3 are complete to confirm nothing needs to change)
@@ -255,6 +255,7 @@ Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must w
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-09-29** — Phase 2 Step 6 complete (pending user review): data-notes written; key decisions are Mitsubishi spider must be rewritten to crawl mitsubishicomfort.com via crawl4ai, Carrier directory-listing approach is dead and model families may need to change, Daikin seed URL needs updating, crawl4ai and google-generativeai need to be installed. Open question on Carrier model families blocks Step 7.
 - **2026-09-29** — Phase 2 Step 5 complete: live portal probes revealed both Mitsubishi seed URLs are dead, Carrier directory listing returns 403 (but direct file URLs may work), Daikin seed is live but canonical domain changed and crawl4ai is not installed. All three portal assumptions from Step 4 need revision in Step 6.
 - **2026-09-29** — Replaced Anthropic API with Google Gemini Flash (free tier) for all VLM tasks. Scripts `vlm_extract_error_codes.py` and `prelabel_vlm.py` will need to be updated to use the Gemini SDK instead of the Anthropic SDK. `GEMINI_API_KEY` replaces `ANTHROPIC_API_KEY`.
 - **2026-09-29** — Phase 1 Step 4 complete (pending user review): constraints/assumptions written; key explicit assumption flagged — portal URLs unverified until spiders actually run.
@@ -295,10 +296,29 @@ Run reproducibly: targeted `curl` HEAD/GET probes + DNS lookups against all seed
 
 ---
 
+## 13. Phase 2, Step 6 — Data-notes (observations → decisions)
+
+| Observation | Decision |
+|---|---|
+| Mitsubishi mylinkdrive.com: both subdomains dead (connection refused / DNS gone) | Rewrite `spider_mitsubishi.py` to use `mitsubishicomfort.com/products/sitemap.xml` as product index, then crawl MSZ/MXZ/MUZ/PUZ product pages for PDF links via crawl4ai. |
+| Mitsubishi resources page has 1 static PDF ref in raw HTML — rest is JS-rendered | crawl4ai required for Mitsubishi, same as Daikin. Static httpx spider will miss nearly all PDFs. |
+| Carrier `shareddocs.com/hvac/` tree: 403 on all directory paths, both bot UA and browser UA | Directory enumeration dead. Spider must find PDF URLs through a different mechanism. |
+| Carrier direct file access returns 404 (not 403) on guessed URL | Individual PDFs are publicly accessible once we have the correct URL. Blocker is enumeration, not access. |
+| Carrier model families 40MAQ / 38MAQB / 25HCE absent from `carrier.com` US residential sitemap | These are commercial/ductless models. **Open question: keep these families and find the commercial portal, or swap to residential Carrier models whose pages ARE reachable?** Decision required before Step 7. |
+| Daikin `daikinac.com/resource-center/` is live, robots.txt `Allow: *`; canonical domain shifted to `daikincomfort.com` | Update spider seed URL from `daikinac.com` to `daikincomfort.com`. No other change needed. |
+| `crawl4ai` listed in requirements.txt but not installed | Run `pip install crawl4ai && crawl4ai-setup` before any spider runs. Add to README. |
+| `requirements.txt` still lists `anthropic>=0.34` | Replace with `google-generativeai` (Gemini decision from Step 4). Update `vlm_extract_error_codes.py` and `prelabel_vlm.py`. |
+
+---
+
 ## 8. Next action
 
-**Phase 2, Step 5 complete (Section 12) — awaiting user review.**
+**Phase 2, Step 6 data-notes written (Section 13) — awaiting user review.**
 
-Once confirmed, next is **Phase 2, Step 6: data-notes** — every observation from
-Step 5 paired with the decision it leads to (not just "portal X is broken" but
-"portal X is broken, therefore we do Y instead"). Do not start without go-ahead.
+One open question before Step 7: **Carrier model families**. The 40MAQ/38MAQB/25HCE
+families in `sources.yaml` don't appear in `carrier.com`'s public residential sitemap.
+Options: (a) find Carrier's commercial portal that covers these models, or (b) swap to
+Carrier residential model families whose product pages are reachable. Need user input.
+
+Once resolved, next is **Phase 2, Step 7: clean target data model** — design the
+shape of the data we want out of the pipeline (not the shape we were handed).
