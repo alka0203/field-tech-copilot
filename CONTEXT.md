@@ -151,7 +151,9 @@ data or paid API.
 - [x] Phase 3, Step 10 — Riskiest parts identified (2026-09-29). See Section 17.
 - [x] Phase 3, Step 11 — Failure/safety design (2026-09-29). See Section 18.
 - [x] Phase 4, Step 12 — Skeleton audited and fixed (2026-09-29): requirements.txt updated (anthropic→google-generativeai, added chromadb/sentence-transformers/fastapi/uvicorn), .env.example created, data/ dirs created, all three spiders updated, both VLM scripts ported to Gemini Flash, .venv created.
-- [ ] Phase 4, Steps 13-18 — Pipeline with self-checks, thin end-to-end slice, eval script + baseline, incremental capability + re-eval, API/UI wrap, deploy + re-eval
+- [x] Phase 4, Step 13 (partial) — Carrier pipeline complete: 4 PDFs downloaded, Docling extracted, 34 error codes in error_codes.jsonl (16 alphanumeric 7-seg + 18 LED-blink). Mitsubishi + Daikin spiders deferred (crawl4ai ready). VLM scripts migrated to google-genai + retry; markdown-based extractor (extract_error_codes_from_md.py) added as primary path (no API calls needed for PDF-sourced manuals).
+- [x] Phase 4, Step 14 — Thin end-to-end slice complete (2026-09-29): RAG index built (503 chunks in ChromaDB), copilot.py end-to-end inference script written (image → VLM → RAG → grounded answer). RAG retrieval verified: E1 hit at score 0.77, correct causes returned. Graceful quota fallback: returns direct RAG extract when Gemini unavailable. VLM image path code-complete; test deferred to next session (daily quota exhausted: 20 req/day free tier). Risk 1 (Docling table quality) resolved. Risk 4 (RAG retrieval) validated.
+- [ ] Phase 4, Steps 15-18 — Eval script + baseline, incremental capability + re-eval, API/UI wrap, deploy + re-eval
 - [ ] Phase 5, Steps 19-20 — Handoff doc, retrospective
 
 ---
@@ -258,6 +260,8 @@ Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must w
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-09-29** — Phase 4 Step 14 complete: RAG index built (503 chunks: 34 error_table + 469 troubleshooting, ChromaDB embedded). End-to-end inference script (copilot.py) written with image mode (VLM → RAG → LLM synthesis) and override mode (--brand/--model/--code). RAG retrieval validated: E1 → score 0.77, correct fault name + causes. Graceful 429 fallback added. VLM image test deferred — gemini-3.8-flash free tier is 20 req/day, exhausted during Step 13 VLM extraction attempts. Will test first thing next session. Synthetic test images generated in data/synth/test/. Risk 4 (RAG retrieval quality) validated on Carrier data.
+- **2026-09-29** — Gemini model chain: 1.5-flash retired → 2.5-flash not available to new users → 3.8-flash (current). All VLM scripts updated. Free tier hard limit: 20 req/day. Primary extraction path for PDFs is now markdown-based (extract_error_codes_from_md.py, zero API calls). VLM reserved for image-only sources at runtime.
 - **2026-09-29** — Bug fix in common.py robots_allow(): urllib.robotparser sets disallow_all=True on 404 robots.txt (opposite of web convention). Fixed by fetching robots.txt with httpx first; 404 → allow_all=True, network error → fail closed. Discovered when spider_carrier.py skipped all 4 confirmed-live PDFs.
 - **2026-09-29** — Phase 4 Step 13 in progress: Carrier spider ran successfully (4 PDFs, manifest written). Docling extraction quality confirmed on 40MAQ-01SM.pdf — clean pipe-delimited tables with error code, malfunction conditions, supposed causes. Risk 1 resolved.
 - **2026-09-29** — Phase 4 Step 12 complete: skeleton fully audited and reconciled with Phase 1-3 decisions. Spider rewrites (Carrier URL-seeded, Mitsubishi crawl4ai+mitsubishicomfort.com, Daikin seed URL), VLM scripts ported to Gemini Flash, requirements.txt updated, .env.example created, data/ dirs scaffolded, .venv created.
