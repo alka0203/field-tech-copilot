@@ -143,7 +143,9 @@ data or paid API.
 - [x] Phase 1, Step 2 — 10-15 example use-cases written (2026-09-29). See Section 9.
 - [x] Phase 1, Step 3 — Done/good definition + measurable success metric written (2026-09-29). See Section 10.
 - [x] Phase 1, Step 4 — Constraints/assumptions doc written (2026-09-29). See Section 11. **Awaiting user review before Phase 2.**
-- [ ] Phase 2, Steps 5-7 — Hands-on data exploration, data-notes, clean data model
+- [x] Phase 2, Step 5 — Hands-on portal exploration run (2026-09-29). See Section 12. **Awaiting user review before Step 6.**
+- [ ] Phase 2, Step 6 — Data-notes: observations paired with decisions
+- [ ] Phase 2, Step 7 — Clean target data model
 - [ ] Phase 3, Steps 8-11 — Architecture diagram, tech-choice rationale, riskiest-part identification, failure/safety design
 - [ ] Phase 4, Step 12 — Skeleton (**this part is actually already done** — see Section 5 — but was built out of order, before Phase 1-3; revisit once Phase 1-3 are complete to confirm nothing needs to change)
 - [ ] Phase 4, Steps 13-18 — Pipeline with self-checks, thin end-to-end slice, eval script + baseline, incremental capability + re-eval, API/UI wrap, deploy + re-eval
@@ -253,6 +255,7 @@ Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must w
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-09-29** — Phase 2 Step 5 complete: live portal probes revealed both Mitsubishi seed URLs are dead, Carrier directory listing returns 403 (but direct file URLs may work), Daikin seed is live but canonical domain changed and crawl4ai is not installed. All three portal assumptions from Step 4 need revision in Step 6.
 - **2026-09-29** — Replaced Anthropic API with Google Gemini Flash (free tier) for all VLM tasks. Scripts `vlm_extract_error_codes.py` and `prelabel_vlm.py` will need to be updated to use the Gemini SDK instead of the Anthropic SDK. `GEMINI_API_KEY` replaces `ANTHROPIC_API_KEY`.
 - **2026-09-29** — Phase 1 Step 4 complete (pending user review): constraints/assumptions written; key explicit assumption flagged — portal URLs unverified until spiders actually run.
 - **2026-09-29** — Revised Step 3 must-have: all three brands (Daikin, Mitsubishi, Carrier) working end-to-end is the bar, not a nice-to-have. User confirmed when asked explicitly.
@@ -270,10 +273,32 @@ Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must w
 
 ---
 
+## 12. Phase 2, Step 5 — Portal exploration results (2026-09-29)
+
+Run reproducibly: targeted `curl` HEAD/GET probes + DNS lookups against all seed URLs in `sources.yaml`. No full spider runs yet.
+
+| Portal | Expected | Actual |
+|---|---|---|
+| Mitsubishi `meus1.mylinkdrive.com` | Folder-style PDF listing | HTTP 000 — connection refused. DNS CNAME resolves to `mylinkdrive.com` but no TCP connection. Portal dead. |
+| Mitsubishi `nonul.mylinkdrive.com` | Folder-style PDF listing | DNS: no answer. Subdomain gone entirely. |
+| Carrier `shareddocs.com/hvac/docs/1009/Public/04/` | HTML directory listing | HTTP 403 — both bot UA and browser UA. Directory listing disabled site-wide under `/hvac/`. |
+| Carrier direct PDF URL (guessed filename) | 403 if blocked | HTTP 404 — individual files are reachable in principle; need correct filenames to enumerate. |
+| Carrier `shareddocs.com/robots.txt` | Allow/disallow rules | HTTP 404 — no robots.txt. Python `urllib.robotparser` treats 404 as allow-all, so `robots_allow()` will return True (correct behavior). |
+| Daikin `daikinac.com/resource-center/` | JS-rendered page, crawl4ai needed | HTTP 200 — site live. robots.txt `Allow: *`. Old domain — canonical is `daikincomfort.com/resource-center/`. |
+| `crawl4ai` (Daikin dependency) | Listed in requirements.txt | Not installed. Daikin spider cannot run until `pip install crawl4ai && crawl4ai-setup`. |
+| `requirements.txt` | Gemini SDK | Still lists `anthropic>=0.34`. Needs `google-generativeai`. |
+
+**Step 4 assumption check:**
+- Assumption 1 (portals live + structured as expected): **FALSE** for Mitsubishi (dead), **PARTIAL** for Carrier (live but no directory listing), **TRUE** for Daikin.
+- Assumption 2 (error codes in PDFs): unverifiable — no PDFs collected yet.
+- Assumption 3 (phone photo quality sufficient for VLM): unverifiable — no VLM wired in yet.
+
+---
+
 ## 8. Next action
 
-**Phase 1, Step 4 constraints/assumptions written (Section 11) — awaiting user review.**
+**Phase 2, Step 5 complete (Section 12) — awaiting user review.**
 
-Once confirmed, next is **Phase 2, Step 5: hands-on data exploration** — run the
-existing scripts against live sources reproducibly, capture output, sanity-check
-every assumption from Step 4 against real data. Do not start without explicit go-ahead.
+Once confirmed, next is **Phase 2, Step 6: data-notes** — every observation from
+Step 5 paired with the decision it leads to (not just "portal X is broken" but
+"portal X is broken, therefore we do Y instead"). Do not start without go-ahead.
