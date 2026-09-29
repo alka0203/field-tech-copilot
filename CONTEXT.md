@@ -186,7 +186,7 @@ Grounded in `sources.yaml` model families. Labels in brackets are for eval desig
 ### Must-haves (the bar for calling this project done)
 
 1. **Nameplate ID works** — given a phone photo of an HVAC nameplate, returns the correct manufacturer and model family. Full model-number precision is nice-to-have; family-level is the bar.
-2. **Error-code decode works** — given manufacturer + model + error code, returns fault description + likely causes + remedy steps, grounded in the manufacturer's own service manual (not a web guess).
+2. **Error-code decode works across all three brands** — given manufacturer + model + error code, returns fault description + likely causes + remedy steps, grounded in the manufacturer's own service manual (not a web guess). All three brand pipelines (Daikin, Mitsubishi, Carrier) must be exercised end-to-end.
 3. **Honest on ignorance** — when data is absent or the question is out of scope, the system says so rather than hallucinating. Edge cases #11 and #14 in Section 9 are the specific tests for this.
 4. **Eval script runs and records a score** — the 15 use-cases from Step 2 are wired into an actual runnable script; results are written down, not eyeballed.
 5. **Handoff doc exists** — a zero-context reader can understand what it is, run it locally, and read the eval results.
@@ -194,7 +194,7 @@ Grounded in `sources.yaml` model families. Labels in brackets are for eval desig
 ### Nice-to-haves (cut if time-pressured)
 
 - Full model-number precision beyond family (e.g. `FTXS35LVMA` vs. just `FTXS`)
-- All three brands working end-to-end (one brand fully working is the demo bar; two or three is the stretch)
+- ~~All three brands working end-to-end~~ — **revised to must-have** (see decisions log 2026-09-29)
 - Any UI beyond a raw API call
 - Latency optimization
 - Auth, rate limiting, or uptime guarantees
@@ -215,6 +215,7 @@ Grounded in `sources.yaml` model families. Labels in brackets are for eval desig
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-09-29** — Revised Step 3 must-have: all three brands (Daikin, Mitsubishi, Carrier) working end-to-end is the bar, not a nice-to-have. User confirmed when asked explicitly.
 - **2026-09-29** — Phase 1 Step 3 complete (pending user review): defined must-haves vs. nice-to-haves and three measurable success metrics (exact ≥4/5, edge ≥4/6, fuzzy qualitative). Audience-driven: auth/uptime/UI are explicitly nice-to-have given portfolio context.
 - **2026-09-29** — Phase 1 Step 2 complete (pending user review): 15 use-cases written, grounded in `sources.yaml` model families, covering 5 exact, 4 fuzzy, and 6 edge/mixed cases. These become the eval seed set in Phase 4 Step 15.
 - **2026-09-29** — Rewrote this file to be fully self-contained (methodology primer inlined, full repo inventory with proof status, explicit checklist) so a fresh session/window with zero chat history can pick this up without re-deriving anything. Prompted by user request.
