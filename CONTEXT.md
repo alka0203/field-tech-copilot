@@ -147,9 +147,9 @@ data or paid API.
 - [x] Phase 2, Step 6 — Data-notes written (2026-09-29). See Section 13. Carrier resolved same session.
 - [x] Phase 2, Step 7 — Clean target data model designed (2026-09-29). See Section 14. **Awaiting user review before Phase 3.**
 - [x] Phase 3, Step 8 — Architecture diagram (2026-09-29). See Section 15. **Awaiting user review before Step 9.**
-- [ ] Phase 3, Step 9 — Tech-choice rationale + alternatives rejected
-- [ ] Phase 3, Step 10 — Riskiest parts identified, tested first
-- [ ] Phase 3, Step 11 — Failure/safety design
+- [x] Phase 3, Step 9 — Tech-choice rationale + alternatives rejected (2026-09-29). See Section 16.
+- [x] Phase 3, Step 10 — Riskiest parts identified (2026-09-29). See Section 17.
+- [x] Phase 3, Step 11 — Failure/safety design (2026-09-29). See Section 18.
 - [ ] Phase 4, Step 12 — Skeleton (**this part is actually already done** — see Section 5 — but was built out of order, before Phase 1-3; revisit once Phase 1-3 are complete to confirm nothing needs to change)
 - [ ] Phase 4, Steps 13-18 — Pipeline with self-checks, thin end-to-end slice, eval script + baseline, incremental capability + re-eval, API/UI wrap, deploy + re-eval
 - [ ] Phase 5, Steps 19-20 — Handoff doc, retrospective
@@ -258,6 +258,7 @@ Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must w
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-09-29** — Phase 3 complete: Steps 8-11 done. Tech choices locked (crawl4ai for JS portals, Docling for PDF extraction, Gemini Flash for all VLM tasks, sentence-transformers + ChromaDB for RAG, FastAPI + Fly.io for serving). Riskiest part: Docling table extraction quality — tested first in Phase 4 Step 13.
 - **2026-09-29** — Phase 3 Step 8 complete (pending review): Mermaid architecture diagram committed — two-lane design (offline pipeline: crawl → extract → error_codes → RAG index; online: photo → VLM nameplate+code → RAG retrieval → grounded answer).
 - **2026-09-29** — Phase 2 Step 7 complete: clean target data model designed — three tables: error_codes (structured, normalized), manuals_manifest (unchanged), rag_chunks (typed by content). Key decision: error_code normalized at ingest, causes/steps as lists not free text.
 - **2026-09-29** — Carrier confirmed viable: all three model family PDFs (40MAQ, 38MAQB, 25HCE) are live on shareddocs.com via direct URL. Spider must be rewritten from directory-enumeration to URL-seeded fetching. Confirmed URLs recorded in Section 13.
@@ -406,13 +407,78 @@ flowchart TD
 
 ---
 
+## 16. Phase 3, Step 9 — Tech-choice rationale
+
+| Component | Chosen | Why | Rejected alternatives |
+|---|---|---|---|
+| **Web crawling (Daikin, Mitsubishi)** | `crawl4ai` + Playwright | Both portals are JS-rendered; static httpx can't see PDF links until the page executes. | Scrapy (overkill, no JS rendering); Selenium (slower, heavier than Playwright) |
+| **Web crawling (Carrier)** | `httpx` with seeded URLs | Direct URL fetch — no JS rendering needed, no directory listing required. | crawl4ai (unnecessary overhead for static fetch) |
+| **PDF extraction** | `Docling` | Preserves table structure, reading order, and figures from complex HVAC manual layouts. Error-code tables in these manuals are multi-column with merged cells — PyMuPDF dumps raw text and loses the structure entirely. | PyMuPDF (raw text only); pdfplumber (better but still poor on merged cells); Camelot (tables only, misses prose) |
+| **VLM — extraction + nameplate reading + error display reading** | Gemini Flash (free tier) | Strong multimodal capability, free tier sufficient for one-time pipeline + demo inference, no spend required. | Claude (costs money per call); GPT-4V (costs money); LLaVA local (quality too low for structured JSON extraction from noisy field photos) |
+| **Embeddings** | `sentence-transformers` (`all-MiniLM-L6-v2`) | Free, runs locally, no API dependency at query time — means the deployed app doesn't need an embeddings API call on every request. | OpenAI `text-embedding-3` (paid); Gemini embedding (free but adds a network call on every query) |
+| **Vector store** | `ChromaDB` (embedded mode) | Zero-config, no server process, single `pip install`, persists to a local directory. Right-sized for ~thousands of chunks from 60-300 PDFs. | Pinecone (paid, managed); Qdrant (requires a server); Weaviate (heavy, requires Docker); FAISS (no persistence, no metadata filtering) |
+| **API framework** | `FastAPI` | Async, auto-generates OpenAPI docs, standard for Python ML APIs. | Flask (no async, no auto-docs); Django (far too heavy for a single `/identify` endpoint) |
+| **Deployment** | `Fly.io` (free tier) | Docker-based deploy, free allowance covers a small FastAPI app, easy rollback, gives a real public URL for the demo. | Railway/Render (similar but less predictable free tier limits); AWS/GCP/Azure (overkill for a portfolio demo) |
+| **Deduplication** | sha256 → phash → CLIP (existing `dedupe_pipeline.py`) | Three-stage funnel: exact duplicates caught cheaply first, near-duplicates by perceptual hash, semantic relevance/quality by CLIP. Already built and designed. | Single-stage hash only (misses near-dupes); CLIP-only (expensive on every image) |
+| **Synthetic image pipeline** | `seven_segment.py` + `augment.py` + `composite_onto_photos.py` (existing) | Already smoke-tested end-to-end. Covers the hard cases real scraped images miss: specific error codes at known angles, controlled backlight colors, JPEG noise. | Off-the-shelf augmentation only (can't generate specific error codes); no synthetic data (leaves model blind to rare codes) |
+
+---
+
+## 17. Phase 3, Step 10 — Riskiest parts (tested first in Phase 4)
+
+Ranked by: (likelihood of being wrong) × (cost of finding out late).
+
+**Risk 1 — HIGHEST: Docling + Gemini Flash can extract structured error-code tables from these specific PDFs.**
+HVAC service manuals vary wildly in layout. Some have clean HTML-style tables; others are scanned images of tables, or multi-column layouts with merged cells and footnotes. If Docling can't produce clean Markdown tables, the VLM extraction step gets noisy input and the `error_codes` table will be garbage. This is the single step the entire pipeline depends on — bad extraction means bad retrieval means bad answers.
+*Test first (Phase 4 Step 13): run Docling on one PDF from each brand, inspect the Markdown output manually, confirm tables are structured before writing any extraction code.*
+
+**Risk 2 — HIGH: Gemini Flash reliably reads error codes from real field photos.**
+The nameplate-reading and error-display-reading tasks require the VLM to correctly OCR noisy, glare-affected, perspective-distorted text from a phone photo. We've smoke-tested the synthetic pipeline but never tested Gemini Flash on real photos. If accuracy is poor, the whole inference path fails at step 1.
+*Test in Phase 4 Step 14 (thin end-to-end slice): run Gemini Flash on the 25 own-photos target set (once collected) before building anything else in the inference path.*
+
+**Risk 3 — MEDIUM: mitsubishicomfort.com PDF extraction via crawl4ai.**
+We know the old portal is dead and the new one is JS-rendered, but we haven't actually run crawl4ai against it yet. The product pages may require interaction (clicking tabs, navigating nested menus) that a simple `arun()` call won't handle. Carrier and Daikin have the same crawl4ai risk but lower — Carrier uses seeded URLs (no crawling needed) and Daikin's portal structure is better known.
+*Test early in Phase 4 Step 13: run spider_mitsubishi.py first, before the other two.*
+
+**Risk 4 — MEDIUM: RAG retrieval quality on exact-code queries.**
+The eval set has 5 exact-code questions. If the vector index doesn't rank the right error-table chunk at top-3, the answer generation step has no grounding. ChromaDB with MiniLM embeddings may not distinguish "U4 communication fault Mitsubishi MXZ" from adjacent codes well enough.
+*Measured directly by Phase 4 Step 15 eval script — retrieval precision is a tracked metric.*
+
+**Risk 5 — LOW: Fly.io free tier is sufficient.**
+The deployed app needs to load a ChromaDB index and make Gemini API calls. ChromaDB embedded index for ~thousands of chunks is likely under 100MB. Fly.io free tier allows 256MB RAM — tight but probably fine.
+*Only hits in Phase 4 Step 18 (deploy + re-eval). Low priority to investigate early.*
+
+---
+
+## 18. Phase 3, Step 11 — Failure & safety design
+
+**Structural guardrails (enforced in code, not just by convention):**
+
+| Risk | Structural enforcement |
+|---|---|
+| Accidentally committing scraped PDFs or images | `.gitignore` covers `data/raw/` entirely. Manifests-only policy enforced at the repo level — can't accidentally push bytes. |
+| Paid API scripts burning budget silently | `fetch_brave.py` and `fetch_serpapi.py` already hard-refuse to run without key env vars set + `--max-queries` hard cap. No key = no run, not a soft warning. |
+| Spiders silently returning zero results after a portal change | Mitsubishi spider raises `PortalShapeChanged` and exits 1 on zero PDF links or login-wall detection. Carrier + Daikin must have the same loud-failure behavior (to be added in Phase 4 Step 13 rewrites). |
+| Gemini API key accidentally logged or committed | API key in `.env` only (gitignored). Scripts read from environment, never from a hardcoded string. `.env.example` committed with placeholder values. |
+| VLM hallucinating an error code that doesn't exist in the manual | `error_codes` table includes `source_pdf_sha` — every answer generation prompt must include the retrieved chunk text as grounding, not just the stored record. Instruction to model: cite the manual section, don't answer from general knowledge. Verified in eval: a hallucinated code with no `source_pdf_sha` match is a failure. |
+| Out-of-scope questions answered confidently | Retrieval step returns a relevance score. If top-1 score is below threshold (TBD during eval), the API returns a structured "I don't have data for this" response — not a hallucinated answer. This is directly tested by edge cases #11 and #14 in the eval set. |
+| Prompt injection via nameplate/sticker images | Red-team scripts (`sticker_images.py`, `poisoned_notes.py`) already scaffolded. Run these against the live endpoint in Phase 4 Step 18 before calling any guardrail "done." The methodology requires an independent audit pass for guardrail-related claims. |
+
+**Failure modes accepted (not guarded against, by design):**
+- Concurrent requests: no rate limiting, no queuing. Single-user demo only.
+- Uptime: no health checks, no restart policy. Portfolio demo, not production.
+- Model versioning: Gemini Flash may change behavior between API versions. Not guarded — acceptable for this scope.
+
+---
+
 ## 8. Next action
 
 **Phase 2, Step 6 data-notes written (Section 13) — awaiting user review.**
 
-**Phase 3, Step 8 complete — architecture diagram in Section 15. Awaiting review.**
+**Phase 3 complete. Moving to Phase 4, Step 12: verify skeleton is complete.**
 
-Next is **Phase 3, Step 9: tech-choice rationale** — each component's chosen
-technology + written "why," including alternatives explicitly rejected.
-Do not start without explicit go-ahead. — design the
+Phase 4 Step 12 is already partially done (skeleton was built before Phase 1-3).
+Next action: audit the skeleton against what Phase 1-3 decided, fix gaps
+(requirements.txt, spider seeds, missing .env.example), and confirm it's solid
+before running anything against live data. — design the
 shape of the data we want out of the pipeline (not the shape we were handed).
