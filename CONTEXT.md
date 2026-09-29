@@ -227,7 +227,7 @@ Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must w
 - Error codes: typically 20-100 unique codes per model family — small enough to fit in a prompt if needed.
 
 **Budget**
-- Anthropic API: keep total spend under **$20** for the full pipeline run. Flag before any call that would exceed this.
+- VLM: **Google Gemini Flash** (free tier via AI Studio, `GEMINI_API_KEY`). Replaces Anthropic API for all VLM tasks (`vlm_extract_error_codes.py`, `prelabel_vlm.py`). Free tier is sufficient for a one-off pipeline run; no spend cap needed.
 - Paid image search: hard-capped by `--max-queries` in existing scripts. Never run without keys explicitly set.
 - Compute: local only, no cloud GPU.
 
@@ -253,7 +253,8 @@ Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must w
 
 (Newest first. Add an entry here after every step — don't batch.)
 
-- **2026-09-29** — Phase 1 Step 4 complete (pending user review): constraints/assumptions written; key explicit assumption flagged — portal URLs unverified until spiders actually run. Budget cap set at $20 Anthropic API spend for full pipeline.
+- **2026-09-29** — Replaced Anthropic API with Google Gemini Flash (free tier) for all VLM tasks. Scripts `vlm_extract_error_codes.py` and `prelabel_vlm.py` will need to be updated to use the Gemini SDK instead of the Anthropic SDK. `GEMINI_API_KEY` replaces `ANTHROPIC_API_KEY`.
+- **2026-09-29** — Phase 1 Step 4 complete (pending user review): constraints/assumptions written; key explicit assumption flagged — portal URLs unverified until spiders actually run.
 - **2026-09-29** — Revised Step 3 must-have: all three brands (Daikin, Mitsubishi, Carrier) working end-to-end is the bar, not a nice-to-have. User confirmed when asked explicitly.
 - **2026-09-29** — Phase 1 Step 3 complete (pending user review): defined must-haves vs. nice-to-haves and three measurable success metrics (exact ≥4/5, edge ≥4/6, fuzzy qualitative). Audience-driven: auth/uptime/UI are explicitly nice-to-have given portfolio context.
 - **2026-09-29** — Phase 1 Step 2 complete (pending user review): 15 use-cases written, grounded in `sources.yaml` model families, covering 5 exact, 4 fuzzy, and 6 edge/mixed cases. These become the eval seed set in Phase 4 Step 15.
