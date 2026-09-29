@@ -146,7 +146,10 @@ data or paid API.
 - [x] Phase 2, Step 5 — Hands-on portal exploration run (2026-09-29). See Section 12.
 - [x] Phase 2, Step 6 — Data-notes written (2026-09-29). See Section 13. Carrier resolved same session.
 - [x] Phase 2, Step 7 — Clean target data model designed (2026-09-29). See Section 14. **Awaiting user review before Phase 3.**
-- [ ] Phase 3, Steps 8-11 — Architecture diagram, tech-choice rationale, riskiest-part identification, failure/safety design
+- [x] Phase 3, Step 8 — Architecture diagram (2026-09-29). See Section 15. **Awaiting user review before Step 9.**
+- [ ] Phase 3, Step 9 — Tech-choice rationale + alternatives rejected
+- [ ] Phase 3, Step 10 — Riskiest parts identified, tested first
+- [ ] Phase 3, Step 11 — Failure/safety design
 - [ ] Phase 4, Step 12 — Skeleton (**this part is actually already done** — see Section 5 — but was built out of order, before Phase 1-3; revisit once Phase 1-3 are complete to confirm nothing needs to change)
 - [ ] Phase 4, Steps 13-18 — Pipeline with self-checks, thin end-to-end slice, eval script + baseline, incremental capability + re-eval, API/UI wrap, deploy + re-eval
 - [ ] Phase 5, Steps 19-20 — Handoff doc, retrospective
@@ -255,6 +258,7 @@ Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must w
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-09-29** — Phase 3 Step 8 complete (pending review): Mermaid architecture diagram committed — two-lane design (offline pipeline: crawl → extract → error_codes → RAG index; online: photo → VLM nameplate+code → RAG retrieval → grounded answer).
 - **2026-09-29** — Phase 2 Step 7 complete: clean target data model designed — three tables: error_codes (structured, normalized), manuals_manifest (unchanged), rag_chunks (typed by content). Key decision: error_code normalized at ingest, causes/steps as lists not free text.
 - **2026-09-29** — Carrier confirmed viable: all three model family PDFs (40MAQ, 38MAQB, 25HCE) are live on shareddocs.com via direct URL. Spider must be rewritten from directory-enumeration to URL-seeded fetching. Confirmed URLs recorded in Section 13.
 - **2026-09-29** — Phase 2 Step 6 complete: data-notes written; Carrier open question resolved; all three brands confirmed viable.
@@ -352,12 +356,63 @@ Already defined in `common.py`. Fields: brand, model_family, url, sha256, bytes,
 
 ---
 
+## 15. Phase 3, Step 8 — Architecture diagram
+
+```mermaid
+flowchart TD
+
+  subgraph OFFLINE["─── Offline Data Pipeline ───"]
+
+    subgraph CRAWL["Manual Collection"]
+      D["Daikin\ncrawl4ai + daikincomfort.com"]
+      MI["Mitsubishi\ncrawl4ai + mitsubishicomfort.com"]
+      CA["Carrier\nhttpx, seeded PDF URLs"]
+    end
+
+    D & MI & CA --> MM["manuals_manifest.csv\n+ data/raw/manuals/*.pdf  (gitignored)"]
+    MM --> DOC["Docling\nPDF → Markdown + tables + figures"]
+    DOC --> FEP["find_error_pages.py\nkeyword-locate error-code sections"]
+    FEP --> VLMX["Gemini Flash\nvlm_extract_error_codes.py\n→ structured JSON per code"]
+    VLMX --> EC[("error_codes table\nbrand · model_family · code\nfault_name · causes · steps\nsource_pdf_sha")]
+    EC --> CHUNK["RAG chunking\n300-500 tok windows, typed\n→ rag_chunks table\n→ vector index"]
+
+    subgraph IMAGES["Image Collection"]
+      FREE["Openverse / Wikimedia\nno key required"]
+      PAID["Brave / SerpAPI\nhard-capped --max-queries"]
+      SYNTH["Synthetic pipeline\nseven_segment → augment\n→ composite_onto_photos"]
+    end
+
+    FREE & PAID --> IMG2D["img2dataset\nimages_manifest.csv"]
+    IMG2D --> DEDUP["Dedupe pipeline\nsha256 → phash → CLIP relevance"]
+    SYNTH --> DEDUP
+    DEDUP --> IMGSET[("Clean image set\ntraining data — not committed")]
+  end
+
+  subgraph ONLINE["─── Inference  (Online) ───"]
+    PHOTO["📷 Phone photo"] --> API["FastAPI endpoint\n/identify"]
+    API --> VLM2["Gemini Flash\n① nameplate ID → brand + model_family\n② error display read → code (normalized)"]
+    VLM2 --> ROUTER{"Router\nwhat does the query need?"}
+    ROUTER -- "error code lookup" --> RETR["RAG retrieval\nvector search, prefer chunk_type=error_table"]
+    ROUTER -- "fuzzy / diagnostic" --> RETR2["RAG retrieval\nprefer chunk_type=troubleshooting"]
+    EC --> RETR
+    EC --> RETR2
+    RETR & RETR2 --> GEN["Gemini Flash\ngrounded answer generation\nwith retrieved context"]
+    GEN --> RESP["JSON response\nfault_name · likely_causes · remedy_steps\nsource_pdf reference"]
+  end
+
+  CHUNK -.->|"vector index\n(built offline)"| RETR
+  CHUNK -.-> RETR2
+```
+
+---
+
 ## 8. Next action
 
 **Phase 2, Step 6 data-notes written (Section 13) — awaiting user review.**
 
-**Phase 2 complete — awaiting user review of Step 7 data model (Section 14).**
+**Phase 3, Step 8 complete — architecture diagram in Section 15. Awaiting review.**
 
-Next is **Phase 3, Step 8: architecture diagram** — boxes/arrows showing every
-component and data flow, not just prose. Do not start without explicit go-ahead. — design the
+Next is **Phase 3, Step 9: tech-choice rationale** — each component's chosen
+technology + written "why," including alternatives explicitly rejected.
+Do not start without explicit go-ahead. — design the
 shape of the data we want out of the pipeline (not the shape we were handed).
