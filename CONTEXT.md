@@ -140,7 +140,7 @@ data or paid API.
 ## 6. Phase progress checklist
 
 - [x] Phase 1, Step 1 — Problem statement written and confirmed by user (2026-09-29). See Section 1 above.
-- [ ] Phase 1, Step 2 — 10-15 example use-cases (**next action, see Section 8**)
+- [x] Phase 1, Step 2 — 10-15 example use-cases written (2026-09-29). See Section 9. **Awaiting user review before Step 3.**
 - [ ] Phase 1, Step 3 — Done/good definition + measurable success metric
 - [ ] Phase 1, Step 4 — Constraints/assumptions doc
 - [ ] Phase 2, Steps 5-7 — Hands-on data exploration, data-notes, clean data model
@@ -151,10 +151,41 @@ data or paid API.
 
 ---
 
+## 9. Phase 1, Step 2 — Example use-cases / eval seed questions
+
+Grounded in `sources.yaml` model families. Labels in brackets are for eval design (not shown to end user).
+
+**Exact / deterministic — answerable precisely if manual data exists:**
+
+1. `[exact]` "What does error code U4 mean on a Mitsubishi MXZ-4C36NA?"
+2. `[exact]` "My Daikin FTXS35LVMA remote is showing E7 — what's the fault and how do I clear it?"
+3. `[exact]` "Carrier 40MAQ outdoor unit is flashing LED code 31 — what component does that point to?"
+4. `[exact]` "What refrigerant does a Daikin RXS18LVJU take and what's the factory charge weight?"
+5. `[exact]` "Mitsubishi PUZ-A24NHA7, error P8 — thermistor fault or refrigerant fault?"
+
+**Fuzzy / subjective — require synthesis, not single lookup:**
+
+6. `[fuzzy]` "The Mitsubishi MSZ-GL15NA keeps short-cycling in heat mode, no error codes showing. Where do I start?"
+7. `[fuzzy]` "Daikin VRV outdoor unit is gurgling loudly for about 30 seconds after startup, then quiets down — normal or fault?"
+8. `[fuzzy]` "Carrier 25HCE is cooling but capacity feels low — no codes, no obvious faults. What's the diagnostic path?"
+9. `[fuzzy]` "Is it normal for the outdoor fan on a Mitsubishi MUZ-GL09NAH to stop while the compressor is still running?"
+
+**Edge / mixed — stress-test routing and honest admission of ignorance:**
+
+10. `[edge: ambiguous nameplate + code]` "Nameplate is dirty — could be MSZ-FH09NA or MSZ-GL09NA, can't tell. It's showing error 6607. What should I check?"
+11. `[edge: unanswerable — out-of-scope question]` "Daikin FTXS60LVMA — what are the torque specs for the scroll compressor bolts?" (system must say the service manual may not contain this)
+12. `[edge: standard remedy failed]` "Mitsubishi MXZ-3C24NAHZ, code P8, I already replaced the thermistor per the manual and it came back two days later. Now what?"
+13. `[edge: verify prior diagnosis]` "Carrier 38MAQB is showing code 55, previous tech called it a loose comms wire and left. Is that plausible and what else could cause it?"
+14. `[edge: no readable nameplate]` "Took a photo of the outdoor unit but the nameplate is rusted out completely. Can you tell the model from the cabinet shape?" (system must decline — no readable text)
+15. `[edge: full two-task pipeline]` "Just snapped a photo of a unit at a new job — need the model confirmed and there's an active fault code on the display. Both in one shot." (exercises nameplate ID + error decode in one request)
+
+---
+
 ## 7. Decisions log
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-09-29** — Phase 1 Step 2 complete (pending user review): 15 use-cases written, grounded in `sources.yaml` model families, covering 5 exact, 4 fuzzy, and 6 edge/mixed cases. These become the eval seed set in Phase 4 Step 15.
 - **2026-09-29** — Rewrote this file to be fully self-contained (methodology primer inlined, full repo inventory with proof status, explicit checklist) so a fresh session/window with zero chat history can pick this up without re-deriving anything. Prompted by user request.
 - **2026-09-29** — Confirmed audience is portfolio/FDE-interview-prep, not a real production tool. Shifts done/good (Step 3, still pending) toward eval quality + writeup over auth/scale/uptime.
 - **2026-09-29** — Locked Phase 1 Step 1 problem statement (nameplate ID + error-code decode from a phone photo, grounded in the manufacturer's own manual) as drafted, confirmed by user without edits.
@@ -169,21 +200,9 @@ data or paid API.
 
 ## 8. Next action
 
-**Phase 1, Step 2: write 10-15 real example use-cases/questions** a
-technician would actually type or ask this copilot, grounded in the actual
-brands/model families already in `sources.yaml` (Daikin: FTXS/FTKF/RXS/VRV/
-Skyair; Mitsubishi: MSZ/MUZ/MXZ/PUZ; Carrier: 40MAQ/38MAQB/25HCE) — not
-invented-sounding generic examples. Mix in:
-- Exact/deterministic cases (e.g. "what does error code U4 mean on a
-  Mitsubishi MXZ") — answerable precisely if the manual data exists.
-- Fuzzy/subjective cases (e.g. "the unit keeps short-cycling, what's likely
-  going on") — require synthesis, not lookup.
-- 2-3 deliberately mixed/edge cases that stress-test whatever routing the
-  design will need later (e.g. a question needing both nameplate ID AND
-  error-code lookup at once; a question the manual data can't actually
-  answer, to test whether the system admits it doesn't know rather than
-  guessing).
+**Phase 1, Step 2 use-cases are drafted (Section 9) — awaiting user review.**
 
-Draft this list, present it, and **stop for review** — do not proceed to
-Step 3 (done/good definition) without explicit go-ahead, per the working
-agreement in Section 3.
+Once confirmed, next is **Phase 1, Step 3: define "done" and "good"** —
+must-haves vs. nice-to-haves, plus at least one measurable success metric
+(e.g. % of exact-case questions answered correctly against the eval set).
+Do not start Step 3 without explicit go-ahead.
