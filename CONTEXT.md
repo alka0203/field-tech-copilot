@@ -141,8 +141,8 @@ data or paid API.
 
 - [x] Phase 1, Step 1 — Problem statement written and confirmed by user (2026-09-29). See Section 1 above.
 - [x] Phase 1, Step 2 — 10-15 example use-cases written (2026-09-29). See Section 9.
-- [x] Phase 1, Step 3 — Done/good definition + measurable success metric written (2026-09-29). See Section 10. **Awaiting user review before Step 4.**
-- [ ] Phase 1, Step 4 — Constraints/assumptions doc
+- [x] Phase 1, Step 3 — Done/good definition + measurable success metric written (2026-09-29). See Section 10.
+- [x] Phase 1, Step 4 — Constraints/assumptions doc written (2026-09-29). See Section 11. **Awaiting user review before Phase 2.**
 - [ ] Phase 2, Steps 5-7 — Hands-on data exploration, data-notes, clean data model
 - [ ] Phase 3, Steps 8-11 — Architecture diagram, tech-choice rationale, riskiest-part identification, failure/safety design
 - [ ] Phase 4, Step 12 — Skeleton (**this part is actually already done** — see Section 5 — but was built out of order, before Phase 1-3; revisit once Phase 1-3 are complete to confirm nothing needs to change)
@@ -211,10 +211,49 @@ Grounded in `sources.yaml` model families. Labels in brackets are for eval desig
 
 ---
 
+## 11. Phase 1, Step 4 — Constraints & assumptions
+
+**Audience & purpose**
+Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must work when shown; nothing else requires uptime.
+
+**Where it runs**
+- Dev/eval: local Mac.
+- Demo: single deployed endpoint (platform TBD in Phase 3) — enough for a live URL, not concurrent load.
+- No multi-region, no HA, no on-call.
+
+**Data volume**
+- ~3 brands × ~4-5 model families × ~5-20 PDFs per family = est. 60-300 PDFs, 50-200 pages each. Not a big-data problem.
+- Images: 25 real phone photos (gold subset) + low hundreds of scraped images via free-first providers.
+- Error codes: typically 20-100 unique codes per model family — small enough to fit in a prompt if needed.
+
+**Budget**
+- Anthropic API: keep total spend under **$20** for the full pipeline run. Flag before any call that would exceed this.
+- Paid image search: hard-capped by `--max-queries` in existing scripts. Never run without keys explicitly set.
+- Compute: local only, no cloud GPU.
+
+**Legal / licensing**
+- Never commit scraped image bytes or manufacturer PDFs — manifests only (url, sha256, license, retrieval_date).
+- Carrier: explicit "no redistribution" — manifest + hash only.
+- Same policy applied uniformly across all three brands.
+
+**Technical constraints**
+- Daikin: JS-heavy portal, requires Playwright/Crawl4AI. Mitsubishi + Carrier: static httpx+BeautifulSoup.
+- Mitsubishi newer R-454B docs may be behind sign-in — spider must fail loudly, not silently skip.
+- All spiders: robots.txt-checked and rate-limited. Do not bypass either.
+- Python only. No new language dependencies without an explicit decision.
+
+**Assumptions (revisit if wrong)**
+1. Manufacturer portals in `sources.yaml` are still live and structured as expected. **Unverified** — first thing likely to break when spiders run.
+2. Error codes are documented inside the PDFs, not just in online knowledge bases. If not, VLM extraction step needs rethinking.
+3. Phone-camera image quality is sufficient for a VLM to read a nameplate under reasonable field conditions. Synthetic augmentation pipeline covers hard cases in training.
+
+---
+
 ## 7. Decisions log
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-09-29** — Phase 1 Step 4 complete (pending user review): constraints/assumptions written; key explicit assumption flagged — portal URLs unverified until spiders actually run. Budget cap set at $20 Anthropic API spend for full pipeline.
 - **2026-09-29** — Revised Step 3 must-have: all three brands (Daikin, Mitsubishi, Carrier) working end-to-end is the bar, not a nice-to-have. User confirmed when asked explicitly.
 - **2026-09-29** — Phase 1 Step 3 complete (pending user review): defined must-haves vs. nice-to-haves and three measurable success metrics (exact ≥4/5, edge ≥4/6, fuzzy qualitative). Audience-driven: auth/uptime/UI are explicitly nice-to-have given portfolio context.
 - **2026-09-29** — Phase 1 Step 2 complete (pending user review): 15 use-cases written, grounded in `sources.yaml` model families, covering 5 exact, 4 fuzzy, and 6 edge/mixed cases. These become the eval seed set in Phase 4 Step 15.
@@ -232,8 +271,8 @@ Grounded in `sources.yaml` model families. Labels in brackets are for eval desig
 
 ## 8. Next action
 
-**Phase 1, Step 3 done/good definition drafted (Section 10) — awaiting user review.**
+**Phase 1, Step 4 constraints/assumptions written (Section 11) — awaiting user review.**
 
-Once confirmed, next is **Phase 1, Step 4: write the constraints/assumptions doc** —
-data volume, where it runs, budget, privacy, and real audience. Do not start Step 4
-without explicit go-ahead.
+Once confirmed, next is **Phase 2, Step 5: hands-on data exploration** — run the
+existing scripts against live sources reproducibly, capture output, sanity-check
+every assumption from Step 4 against real data. Do not start without explicit go-ahead.
