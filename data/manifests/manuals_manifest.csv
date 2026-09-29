@@ -1,0 +1,5 @@
+brand,model_family,url,sha256,bytes,content_type,retrieved_at,source_page,http_status,notes
+carrier,40MAQ,https://www.shareddocs.com/hvac/docs/1009/Public/00/40MAQ-01SM.pdf,41bd271eebd678c6eb0fe6a10014c66e66a57da2690d98bb4c03e732169848e8,2245645,application/pdf,2026-09-29T11:56:17+00:00,https://www.shareddocs.com/hvac/docs/1009/Public/00/40MAQ-01SM.pdf,200,
+carrier,38MAQB,https://www.shareddocs.com/hvac/docs/1009/Public/08/38MAQ-01SM.pdf,fb8cd977a45407dc824604e8d17f6ea5783118947209593a20b878e82bc2760a,7714432,application/pdf,2026-09-29T11:56:20+00:00,https://www.shareddocs.com/hvac/docs/1009/Public/08/38MAQ-01SM.pdf,200,
+carrier,25HCE,https://www.shareddocs.com/hvac/docs/1009/Public/0D/25HBC-HCE-03SI.pdf,133fa40bbab4cbed8a9350d83399181d48a56a8cb4baeb252c63b31d9b2662a3,1173515,application/pdf,2026-09-29T11:56:22+00:00,https://www.shareddocs.com/hvac/docs/1009/Public/0D/25HBC-HCE-03SI.pdf,200,
+carrier,25HCE,https://www.shareddocs.com/hvac/docs/1009/Public/03/24-25-9SM.pdf,3158c739b9901ce801554c5412f7a7eb474fe5c9881fe63fcb07830136641557,6189672,application/pdf,2026-09-29T11:56:24+00:00,https://www.shareddocs.com/hvac/docs/1009/Public/03/24-25-9SM.pdf,200,

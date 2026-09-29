@@ -258,6 +258,8 @@ Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must w
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-09-29** — Bug fix in common.py robots_allow(): urllib.robotparser sets disallow_all=True on 404 robots.txt (opposite of web convention). Fixed by fetching robots.txt with httpx first; 404 → allow_all=True, network error → fail closed. Discovered when spider_carrier.py skipped all 4 confirmed-live PDFs.
+- **2026-09-29** — Phase 4 Step 13 in progress: Carrier spider ran successfully (4 PDFs, manifest written). Docling extraction quality confirmed on 40MAQ-01SM.pdf — clean pipe-delimited tables with error code, malfunction conditions, supposed causes. Risk 1 resolved.
 - **2026-09-29** — Phase 4 Step 12 complete: skeleton fully audited and reconciled with Phase 1-3 decisions. Spider rewrites (Carrier URL-seeded, Mitsubishi crawl4ai+mitsubishicomfort.com, Daikin seed URL), VLM scripts ported to Gemini Flash, requirements.txt updated, .env.example created, data/ dirs scaffolded, .venv created.
 - **2026-09-29** — Phase 3 complete: Steps 8-11 done. Tech choices locked (crawl4ai for JS portals, Docling for PDF extraction, Gemini Flash for all VLM tasks, sentence-transformers + ChromaDB for RAG, FastAPI + Fly.io for serving). Riskiest part: Docling table extraction quality — tested first in Phase 4 Step 13.
 - **2026-09-29** — Phase 3 Step 8 complete (pending review): Mermaid architecture diagram committed — two-lane design (offline pipeline: crawl → extract → error_codes → RAG index; online: photo → VLM nameplate+code → RAG retrieval → grounded answer).

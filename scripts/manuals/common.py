@@ -80,16 +80,30 @@ _robots_cache: dict[str, urllib.robotparser.RobotFileParser] = {}
 
 def robots_allow(url: str) -> bool:
     """Check robots.txt for the URL's origin, caching parsers per host.
-    Fails closed: an unreachable robots.txt is treated as disallow."""
+
+    Behaviour on edge cases:
+    - robots.txt returns 404: treated as allow-all (standard web convention —
+      no robots.txt means no restrictions). urllib.robotparser incorrectly sets
+      disallow_all=True on 404, so we fetch the status ourselves first.
+    - robots.txt unreachable (network error, non-404 error): fails closed
+      (treated as disallow), per the original conservative policy.
+    """
     parsed = urlparse(url)
     origin = f"{parsed.scheme}://{parsed.netloc}"
     rp = _robots_cache.get(origin)
     if rp is None:
-        rp = urllib.robotparser.RobotFileParser()
-        rp.set_url(urljoin(origin, "/robots.txt"))
+        robots_url = urljoin(origin, "/robots.txt")
         try:
-            rp.read()
+            resp = httpx.get(robots_url, headers={"User-Agent": USER_AGENT}, timeout=10.0)
+            if resp.status_code == 404:
+                # No robots.txt = allow all: store a permissive parser
+                rp = urllib.robotparser.RobotFileParser()
+                rp.allow_all = True
+            else:
+                rp = urllib.robotparser.RobotFileParser()
+                rp.set_url(robots_url)
+                rp.parse(resp.text.splitlines())
         except Exception:
-            return False
+            return False  # network error → fail closed
         _robots_cache[origin] = rp
     return rp.can_fetch(USER_AGENT, url)
