@@ -17,13 +17,13 @@ import os
 import sys
 from pathlib import Path
 
-import google.generativeai as genai
-import PIL.Image
+from google import genai
+from google.genai import types
 import pandas as pd
 
 KEPT_PATH = Path(__file__).resolve().parents[2] / "data" / "manifests" / "images_kept.csv"
 OUT_PATH = Path(__file__).resolve().parents[2] / "data" / "manifests" / "label_studio_predictions.json"
-GEMINI_MODEL = "gemini-1.5-flash"
+GEMINI_MODEL = "gemini-3.8-flash"
 
 SCHEMA_PROMPT = """Classify this photo for an HVAC field-technician dataset. Return ONLY a JSON
 object matching exactly this shape, no other text:
@@ -37,13 +37,24 @@ object matching exactly this shape, no other text:
   "is_relevant": true | false
 }"""
 
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY", ""))
-model = genai.GenerativeModel(GEMINI_MODEL)
+_client: genai.Client | None = None
+
+
+def get_client() -> genai.Client:
+    global _client
+    if _client is None:
+        _client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+    return _client
 
 
 def classify(image_path: Path) -> dict:
-    img = PIL.Image.open(image_path)
-    response = model.generate_content([SCHEMA_PROMPT, img])
+    img_bytes = image_path.read_bytes()
+    mime = "image/png" if image_path.suffix.lower() == ".png" else "image/jpeg"
+    image_part = types.Part.from_bytes(data=img_bytes, mime_type=mime)
+    response = get_client().models.generate_content(
+        model=GEMINI_MODEL,
+        contents=[SCHEMA_PROMPT, image_part],
+    )
     return json.loads(response.text.strip())
 
 
