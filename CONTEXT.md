@@ -144,8 +144,8 @@ data or paid API.
 - [x] Phase 1, Step 3 — Done/good definition + measurable success metric written (2026-09-29). See Section 10.
 - [x] Phase 1, Step 4 — Constraints/assumptions doc written (2026-09-29). See Section 11. **Awaiting user review before Phase 2.**
 - [x] Phase 2, Step 5 — Hands-on portal exploration run (2026-09-29). See Section 12.
-- [x] Phase 2, Step 6 — Data-notes written (2026-09-29). See Section 13. **One open question for user: Carrier model families (see Section 13). Awaiting review before Step 7.**
-- [ ] Phase 2, Step 7 — Clean target data model
+- [x] Phase 2, Step 6 — Data-notes written (2026-09-29). See Section 13. Carrier resolved same session.
+- [x] Phase 2, Step 7 — Clean target data model designed (2026-09-29). See Section 14. **Awaiting user review before Phase 3.**
 - [ ] Phase 3, Steps 8-11 — Architecture diagram, tech-choice rationale, riskiest-part identification, failure/safety design
 - [ ] Phase 4, Step 12 — Skeleton (**this part is actually already done** — see Section 5 — but was built out of order, before Phase 1-3; revisit once Phase 1-3 are complete to confirm nothing needs to change)
 - [ ] Phase 4, Steps 13-18 — Pipeline with self-checks, thin end-to-end slice, eval script + baseline, incremental capability + re-eval, API/UI wrap, deploy + re-eval
@@ -255,6 +255,7 @@ Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must w
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-09-29** — Phase 2 Step 7 complete: clean target data model designed — three tables: error_codes (structured, normalized), manuals_manifest (unchanged), rag_chunks (typed by content). Key decision: error_code normalized at ingest, causes/steps as lists not free text.
 - **2026-09-29** — Carrier confirmed viable: all three model family PDFs (40MAQ, 38MAQB, 25HCE) are live on shareddocs.com via direct URL. Spider must be rewritten from directory-enumeration to URL-seeded fetching. Confirmed URLs recorded in Section 13.
 - **2026-09-29** — Phase 2 Step 6 complete: data-notes written; Carrier open question resolved; all three brands confirmed viable.
 - **2026-09-29** — Phase 2 Step 5 complete: live portal probes revealed both Mitsubishi seed URLs are dead, Carrier directory listing returns 403 (but direct file URLs may work), Daikin seed is live but canonical domain changed and crawl4ai is not installed. All three portal assumptions from Step 4 need revision in Step 6.
@@ -312,12 +313,51 @@ Run reproducibly: targeted `curl` HEAD/GET probes + DNS lookups against all seed
 
 ---
 
+## 14. Phase 2, Step 7 — Clean target data model
+
+### `error_codes` table (one row per error code per model family)
+| Field | Type | Notes |
+|---|---|---|
+| `brand` | str | `"daikin"` \| `"mitsubishi"` \| `"carrier"` |
+| `model_family` | str | e.g. `"FTXS"`, `"MSZ"`, `"40MAQ"` |
+| `error_code` | str | Normalized: uppercase, no leading zeros. VLM extractor responsible. |
+| `display_type` | str | `"remote_lcd"` \| `"led_flash"` \| `"outdoor_display"` |
+| `fault_name` | str | Short canonical name from manual |
+| `likely_causes` | list[str] | Ordered by probability per manual |
+| `remedy_steps` | list[str] | Ordered action steps from manual |
+| `manual_section` | str | Page/section reference for traceability |
+| `source_pdf_sha` | str | sha256 joining to `manuals_manifest.csv` |
+| `notes` | str | Edge cases, e.g. "only applies to MXZ multi-zone" |
+
+### `manuals_manifest.csv` — no change
+Already defined in `common.py`. Fields: brand, model_family, url, sha256, bytes, content_type, retrieved_at, source_page, http_status, notes.
+
+### `rag_chunks` table (one row per retrieval chunk)
+| Field | Type | Notes |
+|---|---|---|
+| `chunk_id` | str | uuid |
+| `brand` | str | |
+| `model_family` | str | |
+| `source_pdf_sha` | str | Join key to manuals_manifest |
+| `page_number` | int | |
+| `chunk_text` | str | 300-500 token window with overlap |
+| `chunk_type` | str | `"error_table"` \| `"troubleshooting"` \| `"wiring"` \| `"general"` |
+
+### Design decisions
+- `error_code` normalized at ingest (uppercase, no leading zeros) so "e7"/"E7"/"07" all match.
+- `likely_causes` and `remedy_steps` as lists, not free text — forces structured VLM extraction.
+- `source_pdf_sha` as join key — traceability to exact PDF, not just brand.
+- `chunk_type` lets retrieval prefer `error_table` chunks for exact-code queries, `troubleshooting` for fuzzy questions.
+- No image bytes committed — images manifest stays in `data/manifests/images_manifest.csv`.
+
+---
+
 ## 8. Next action
 
 **Phase 2, Step 6 data-notes written (Section 13) — awaiting user review.**
 
-**Carrier resolved** — all three model family PDFs confirmed live on shareddocs.com.
-Spider just needs to be rewritten from directory-enumeration to URL-seeded fetching.
+**Phase 2 complete — awaiting user review of Step 7 data model (Section 14).**
 
-Next is **Phase 2, Step 7: clean target data model** — design the
+Next is **Phase 3, Step 8: architecture diagram** — boxes/arrows showing every
+component and data flow, not just prose. Do not start without explicit go-ahead. — design the
 shape of the data we want out of the pipeline (not the shape we were handed).
