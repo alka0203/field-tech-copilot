@@ -23,6 +23,7 @@ import json
 import os
 import re
 import sys
+import time
 from pathlib import Path
 
 import chromadb
@@ -32,7 +33,7 @@ REPO = Path(__file__).resolve().parents[2]
 CHROMA_DIR = REPO / "data" / "chroma"
 COLLECTION_NAME = "hvac_manuals"
 EMBED_MODEL = "all-MiniLM-L6-v2"
-GEMINI_MODEL = "gemini-3.8-flash"
+GEMINI_MODEL = "gemini-3.7-flash"
 TOP_K = 5
 
 # ---------------------------------------------------------------------------
@@ -56,7 +57,7 @@ Use lowercase for brand. If a field is not legible or not present, use "".
 Do NOT guess — only extract what is clearly visible."""
 
 
-def vlm_extract(image_path: Path) -> dict:
+def vlm_extract(image_path: Path, retries: int = 4) -> dict:
     from google import genai
     from google.genai import types
 
@@ -69,13 +70,23 @@ def vlm_extract(image_path: Path) -> dict:
     img_bytes = image_path.read_bytes()
     mime = "image/png" if image_path.suffix.lower() == ".png" else "image/jpeg"
     image_part = types.Part.from_bytes(data=img_bytes, mime_type=mime)
-    response = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=[NAMEPLATE_PROMPT, image_part],
-    )
-    text = response.text.strip()
-    text = re.sub(r'^```json\s*|\s*```$', '', text, flags=re.DOTALL)
-    return json.loads(text)
+    for attempt in range(retries):
+        try:
+            response = client.models.generate_content(
+                model=GEMINI_MODEL,
+                contents=[NAMEPLATE_PROMPT, image_part],
+            )
+            text = response.text.strip()
+            text = re.sub(r'^```json\s*|\s*```$', '', text, flags=re.DOTALL)
+            return json.loads(text)
+        except Exception as e:
+            if "503" in str(e) or "UNAVAILABLE" in str(e):
+                delay = 10 * (2 ** attempt)
+                print(f"[retry] 503 on VLM, waiting {delay}s …", file=sys.stderr)
+                time.sleep(delay)
+            else:
+                raise
+    raise RuntimeError(f"VLM failed after {retries} retries")
 
 
 # ---------------------------------------------------------------------------
@@ -223,16 +234,24 @@ def generate_answer(brand: str, model_family: str, error_code: str, chunks: list
         brand=brand, model_family=model_family, error_code=error_code, context=context
     )
     client = genai.Client(api_key=api_key)
-    try:
-        response = client.models.generate_content(model=GEMINI_MODEL, contents=[prompt])
-    except Exception as e:
-        if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
-            print("[warn] Gemini quota exhausted — falling back to direct RAG extraction", file=sys.stderr)
-            return _rag_fallback(brand, model_family, error_code, chunks)
-        raise
-    text = response.text.strip()
-    text = re.sub(r'^```json\s*|\s*```$', '', text, flags=re.DOTALL)
-    return json.loads(text)
+    for attempt in range(3):
+        try:
+            response = client.models.generate_content(model=GEMINI_MODEL, contents=[prompt])
+            text = response.text.strip()
+            text = re.sub(r'^```json\s*|\s*```$', '', text, flags=re.DOTALL)
+            return json.loads(text)
+        except Exception as e:
+            err = str(e)
+            if "429" in err or "RESOURCE_EXHAUSTED" in err:
+                print("[warn] Gemini quota exhausted — falling back to direct RAG extraction", file=sys.stderr)
+                return _rag_fallback(brand, model_family, error_code, chunks)
+            elif "503" in err or "UNAVAILABLE" in err:
+                delay = 15 * (2 ** attempt)
+                print(f"[retry] 503 on answer gen, waiting {delay}s …", file=sys.stderr)
+                time.sleep(delay)
+            else:
+                raise
+    return _rag_fallback(brand, model_family, error_code, chunks)
 
 
 # ---------------------------------------------------------------------------

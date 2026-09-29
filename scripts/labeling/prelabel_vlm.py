@@ -23,7 +23,7 @@ import pandas as pd
 
 KEPT_PATH = Path(__file__).resolve().parents[2] / "data" / "manifests" / "images_kept.csv"
 OUT_PATH = Path(__file__).resolve().parents[2] / "data" / "manifests" / "label_studio_predictions.json"
-GEMINI_MODEL = "gemini-3.8-flash"
+GEMINI_MODEL = "gemini-3.7-flash"
 
 SCHEMA_PROMPT = """Classify this photo for an HVAC field-technician dataset. Return ONLY a JSON
 object matching exactly this shape, no other text:

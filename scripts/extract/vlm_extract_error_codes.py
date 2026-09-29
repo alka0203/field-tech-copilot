@@ -23,7 +23,7 @@ from google.genai import types
 ERROR_PAGES_DIR = Path(__file__).resolve().parents[2] / "data" / "raw" / "error_pages"
 INDEX_PATH = ERROR_PAGES_DIR / "error_pages_index.json"
 OUT_PATH = Path(__file__).resolve().parents[2] / "data" / "manifests" / "error_codes.jsonl"
-GEMINI_MODEL = "gemini-3.8-flash"
+GEMINI_MODEL = "gemini-3.7-flash"
 
 SCHEMA_PROMPT = """You are reading one page of an HVAC service manual. Extract every
 distinct error/fault/malfunction code shown on this page as a JSON array. Each
