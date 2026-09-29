@@ -21,7 +21,7 @@ from common import USER_AGENT, append_manifest, fetch_pdf_head_and_hash, polite_
 
 BRAND = "daikin"
 SEED_URLS = {
-    "FTXS": "https://www.daikinac.com/resource-center/",
+    "FTXS": "https://www.daikincomfort.com/resource-center/",
 }
 PDF_LINK_RE = re.compile(r'href=["\']([^"\']+\.pdf)["\']', re.IGNORECASE)
 

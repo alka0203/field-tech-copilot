@@ -26,8 +26,16 @@ torch>=2.3
 # Synthetic rendering
 albumentations>=2.0
 
-# Vision LLM extraction (Anthropic)
-anthropic>=0.34
+# Vision LLM extraction (Gemini Flash — free tier, replaces Anthropic)
+google-generativeai>=0.8
+
+# RAG / vector store
+chromadb>=0.5
+sentence-transformers>=3.0
+
+# API serving
+fastapi>=0.111
+uvicorn>=0.30
 
 # Red-teaming
 pyrit>=0.6

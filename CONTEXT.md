@@ -150,7 +150,7 @@ data or paid API.
 - [x] Phase 3, Step 9 — Tech-choice rationale + alternatives rejected (2026-09-29). See Section 16.
 - [x] Phase 3, Step 10 — Riskiest parts identified (2026-09-29). See Section 17.
 - [x] Phase 3, Step 11 — Failure/safety design (2026-09-29). See Section 18.
-- [ ] Phase 4, Step 12 — Skeleton (**this part is actually already done** — see Section 5 — but was built out of order, before Phase 1-3; revisit once Phase 1-3 are complete to confirm nothing needs to change)
+- [x] Phase 4, Step 12 — Skeleton audited and fixed (2026-09-29): requirements.txt updated (anthropic→google-generativeai, added chromadb/sentence-transformers/fastapi/uvicorn), .env.example created, data/ dirs created, all three spiders updated, both VLM scripts ported to Gemini Flash, .venv created.
 - [ ] Phase 4, Steps 13-18 — Pipeline with self-checks, thin end-to-end slice, eval script + baseline, incremental capability + re-eval, API/UI wrap, deploy + re-eval
 - [ ] Phase 5, Steps 19-20 — Handoff doc, retrospective
 
@@ -258,6 +258,7 @@ Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must w
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-09-29** — Phase 4 Step 12 complete: skeleton fully audited and reconciled with Phase 1-3 decisions. Spider rewrites (Carrier URL-seeded, Mitsubishi crawl4ai+mitsubishicomfort.com, Daikin seed URL), VLM scripts ported to Gemini Flash, requirements.txt updated, .env.example created, data/ dirs scaffolded, .venv created.
 - **2026-09-29** — Phase 3 complete: Steps 8-11 done. Tech choices locked (crawl4ai for JS portals, Docling for PDF extraction, Gemini Flash for all VLM tasks, sentence-transformers + ChromaDB for RAG, FastAPI + Fly.io for serving). Riskiest part: Docling table extraction quality — tested first in Phase 4 Step 13.
 - **2026-09-29** — Phase 3 Step 8 complete (pending review): Mermaid architecture diagram committed — two-lane design (offline pipeline: crawl → extract → error_codes → RAG index; online: photo → VLM nameplate+code → RAG retrieval → grounded answer).
 - **2026-09-29** — Phase 2 Step 7 complete: clean target data model designed — three tables: error_codes (structured, normalized), manuals_manifest (unchanged), rag_chunks (typed by content). Key decision: error_code normalized at ingest, causes/steps as lists not free text.
@@ -475,10 +476,8 @@ The deployed app needs to load a ChromaDB index and make Gemini API calls. Chrom
 
 **Phase 2, Step 6 data-notes written (Section 13) — awaiting user review.**
 
-**Phase 3 complete. Moving to Phase 4, Step 12: verify skeleton is complete.**
+**Phase 4 Step 12 complete. Next: Step 13 — run the data pipeline.**
 
-Phase 4 Step 12 is already partially done (skeleton was built before Phase 1-3).
-Next action: audit the skeleton against what Phase 1-3 decided, fix gaps
-(requirements.txt, spider seeds, missing .env.example), and confirm it's solid
-before running anything against live data. — design the
+Step 13: run Docling on one PDF per brand first (Risk 1 test from Step 10),
+then run all three spiders against live sources, then VLM extraction. — design the
 shape of the data we want out of the pipeline (not the shape we were handed).
