@@ -39,6 +39,18 @@ SEED_URLS: dict[str, list[str]] = {
         # MSZ/MSY/MUZ-GE-NA Series indoor+outdoor service manual (OBH548D)
         "https://www.mitsubishitechinfo.ca/sites/default/files/SH_MS%28Y%29%28Z%29-GE-NA_OBH548D_16.pdf",
     ],
+    "MXZ": [
+        # MXZ-(4)(5)(8)C(36)(42)(48)(60)NA(HZ) multi-zone outdoor unit technical
+        # & service manual (OCH573E) — covers MXZ-4C36NA used in eval case 1.
+        # Confirmed accessible 2026-10-03.
+        "https://www.mitsubishitechinfo.ca/sites/default/files/SH_MXZ-(4)(5)(8)C(36)(42)(48)(60)NA(HZ)_PAC-MKA(30)(31)(50)(51)BC_OCH573E_1.pdf",
+    ],
+    "PUZ": [
+        # PUZ-A12/18/24/30/36/42NHA7/NKA7 outdoor unit service manual (OCH636E)
+        # — covers PUZ-A24NHA7 used in eval case 5.
+        # Confirmed accessible 2026-10-03.
+        "https://www.mitsubishitechinfo.ca/sites/default/files/SH_PU(Y)(Z)-A12_42NKA7(-BS)_OCH636E.pdf",
+    ],
 }
 
 

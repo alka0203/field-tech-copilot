@@ -123,12 +123,15 @@ def retrieve(brand: str, model_family: str, error_code: str) -> list[dict]:
     query = f"Brand: {brand}  Model: {model_family}  Error code: {error_code}"
     embedding = embedder.encode([query])[0].tolist()
 
-    # Broad semantic search
-    results = collection.query(
+    # Broad semantic search — filter by brand when known to prevent cross-brand chunk leakage
+    query_kwargs: dict = dict(
         query_embeddings=[embedding],
         n_results=TOP_K,
         include=["documents", "metadatas", "distances"],
     )
+    if brand:
+        query_kwargs["where"] = {"brand": brand}
+    results = collection.query(**query_kwargs)
 
     chunks = []
     for doc, meta, dist in zip(
