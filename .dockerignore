@@ -1,0 +1,31 @@
+.venv/
+.git/
+.env
+__pycache__/
+*.pyc
+*.pyo
+
+# Large raw pipeline artifacts — not needed at runtime
+data/raw/
+data/eval/
+data/synth/
+data/manifests/
+
+# Dev/test scripts not needed in the image
+scripts/manuals/
+scripts/extract/
+scripts/rag/
+scripts/images/
+scripts/synth/
+scripts/dedupe/
+scripts/redteam/
+scripts/labeling/
+scripts/eval/
+
+# Misc
+*.md
+*.toml
+*.yaml
+*.csv
+Dockerfile
+.dockerignore
