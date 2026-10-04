@@ -114,7 +114,7 @@ USE_CASES: list[dict] = [
         "category": "exact",
         "question": "Mitsubishi PUZ-A24NHA7, error P8 — thermistor fault or refrigerant fault?",
         "brand": "mitsubishi",
-        "model": "MSZ-FH",  # PUZ is outdoor; MSZ-FH manual covers companion outdoor units
+        "model": "PUZ",  # PUZ-A24NHA7 outdoor unit; PUZ service manual now indexed
         "code": "P8",
         "expected": {"type": "grounded_answer"},
     },
@@ -189,7 +189,7 @@ USE_CASES: list[dict] = [
         "category": "edge",
         "question": "Mitsubishi MXZ-3C24NAHZ, code P8, I already replaced the thermistor per the manual and it came back two days later. Now what?",
         "brand": "mitsubishi",
-        "model": "MSZ-FH",
+        "model": "MXZ",  # MXZ multi-zone outdoor; MXZ service manual now indexed
         "code": "P8",
         "expected": {
             "type": "grounded_answer",
