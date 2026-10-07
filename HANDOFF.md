@@ -93,12 +93,14 @@ Eval script: `scripts/eval/eval_rag.py` — 15 seed use-cases from Phase 1.
 
 | Mode | Exact (≥4/5) | Edge (≥4/6) | Fuzzy |
 |------|-------------|-------------|-------|
-| RAG-only (no Gemini) | 1/5 | 5/6 | 4 review |
+| RAG-only (no Gemini) | 1/5 | 4/6 | 4 review |
 | With Gemini synthesis | 5/5* | 6/6* | 4 review |
 
-\* Gemini synthesis score is from a partially clean run (503 outages on the free tier mean not all cases got LLM synthesis in a single run). The individual case results are consistent: all 5 exact cases pass when Gemini responds, case 11 (torque spec refusal) correctly passes only with LLM synthesis.
+\* Gemini synthesis score is from a partially clean run (free-tier quota of 20 req/day means not all 15 cases got LLM synthesis in a single run). Individual case results are consistent: all 5 exact cases pass when Gemini responds; case 11 (torque spec refusal) and case 12 (Mitsubishi P8 with prior repair context) pass only with LLM synthesis.
 
-**Why RAG-only exact score is 1/5:** Only Carrier has structured `error_table` chunks (Mitsubishi/Daikin use different table formats that weren't parsed by the extractor). The prose content for Mitsubishi/Daikin codes exists in the index — it just requires LLM synthesis to extract a structured answer from it.
+**Why RAG-only exact score is 1/5 and edge is 4/6:** Only Carrier has structured `error_table` chunks (exact-match boosted). Mitsubishi and Daikin codes exist in prose troubleshooting chunks — LLM synthesis is required to extract a structured answer from that prose. The brand filter (added in Step 16) also prevents cross-brand chunk leakage, so Mitsubishi/Daikin cases correctly return empty when Gemini is unavailable rather than returning a plausible-looking Carrier answer.
+
+**Why RAG-only exact score is 1/5:** Only Carrier has structured `error_table` chunks (Mitsubishi/Daikin use different table formats that weren't parsed by the extractor). The prose content for Mitsubishi/Daikin codes exists in the index — it just requires LLM synthesis to extract a structured answer from it. A brand filter also prevents cross-brand chunk contamination (see Known Limitations #2).
 
 Re-run the eval:
 ```bash
@@ -167,3 +169,31 @@ The `data/chroma/` index is baked into the Docker image at build time (255MB). T
 - **Test VLM nameplate extraction** on real phone photos
 - **Re-run eval** once Gemini quota resets for a clean 15-case synthesis score
 - **Red-team**: the `scripts/redteam/` directory has prompt-injection sticker and PDF poisoning scripts that were not run
+
+---
+
+## Retrospective (Step 20)
+
+### What surprised me
+
+**The brand-filter bug took the longest to spot.** The original RAG-only eval showed 5/5 exact — which looked great — but was completely wrong. Carrier `error_table` chunks (e.g. "Overload current protection") were dominating Mitsubishi P8 queries via semantic similarity (~0.52 cosine). The auto-scorer marked those PASS because the response had non-empty fault names. Gemini correctly refused because the context was the wrong brand, and that refusal was what revealed the bug. Lesson: always sanity-check *what* the retriever is returning, not just whether the final answer looks plausible.
+
+**One PDF can block the whole pipeline for days.** The PUZ-A24NHA7 manual caused Docling to hang for 766 CPU-minutes (three-plus days). A single complex figure in table detection was enough to stall the entire Mitsubishi eval. PyMuPDF text-only extraction took under one second and produced perfectly usable content. The lesson: always have a fast fallback extractor; don't bet the pipeline on one tool for every input.
+
+**The free-tier quota constraint is more binding than it looks.** 20 Gemini requests/day sounds fine for a 15-case eval, but each 503 retry (15s → 30s → 60s backoff) counts as a request. A run with three 503s consumes a third of the daily budget before producing any answers. This made it impossible to get a clean 15/15 synthesis run. In a real deployment, this would be a blocker on day one.
+
+### What I'd do differently
+
+1. **Write a quota-aware rate-limiter before running any eval.** Track request counts to the LLM API with a local counter; abort cleanly when 80% of quota is consumed rather than burning retries.
+
+2. **Test Docling on a sample page from each PDF before committing to full extraction.** A 5-page sample would have surfaced the PUZ hang in minutes rather than days.
+
+3. **Extract Mitsubishi and Daikin `error_table` chunks from the start.** The RAG-only fallback path is essentially useless for those brands without structured chunks. Treating the LLM synthesis layer as mandatory makes the architecture fragile — any quota or API outage leaves Mitsubishi/Daikin users with empty answers.
+
+4. **Seed the eval with at least one image-mode case.** The VLM extraction path (`POST /query/image`) is code-complete but was never tested end-to-end on a real photo. For a "phone points at nameplate" product, that's the primary user journey — it should have been in the eval from day one.
+
+### What went well
+
+- The fde-build-methodology's "understand before design" approach paid off: discovering that outdoor unit manuals (MXZ, PUZ) hold the system fault codes — not indoor unit manuals (MSZ) — would have been an expensive mistake to find post-deployment.
+- The sliding-window chunking with brand+source metadata made the brand-filter fix a one-line change rather than a re-index.
+- Keeping the offline pipeline (spiders → Docling → ChromaDB) fully separate from the online path meant the index could be rebuilt without touching the API.
