@@ -26,7 +26,7 @@ from typing import Optional
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 # Make the scripts/infer module importable
 REPO = Path(__file__).resolve().parent.parent
@@ -62,9 +62,9 @@ app.add_middleware(
 # ---------------------------------------------------------------------------
 
 class TextQueryRequest(BaseModel):
-    brand: str
-    model_family: str = ""
-    error_code: str = ""
+    brand: str = Field("", pattern=r"^(?i:carrier|daikin|mitsubishi)?$")
+    model_family: str = Field("", max_length=40, pattern=r"^[A-Za-z0-9 ()\-_/.]*$")
+    error_code: str = Field("", max_length=16, pattern=r"^[A-Za-z0-9\-]*$")
 
     model_config = {"json_schema_extra": {
         "example": {"brand": "carrier", "model_family": "40MAQ", "error_code": "E1"}
@@ -116,7 +116,7 @@ def query_text(req: TextQueryRequest):
     answer = generate_answer(brand, model_family, error_code, chunks)
 
     if "error" in answer:
-        raise HTTPException(status_code=500, detail=answer["error"])
+        raise HTTPException(status_code=404 if answer.get("no_data") else 500, detail=answer["error"])
 
     return CopilotResponse(
         brand=answer.get("brand", brand),
@@ -177,7 +177,7 @@ async def query_image(image: UploadFile = File(...)):
     answer = await run_in_threadpool(generate_answer, brand, model_family, error_code, chunks)
 
     if "error" in answer:
-        return _fail(500, answer["error"])
+        return _fail(404 if answer.get("no_data") else 500, answer["error"])
 
     resp = CopilotResponse(
         brand=answer.get("brand", brand),
