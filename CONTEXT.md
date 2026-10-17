@@ -154,8 +154,12 @@ data or paid API.
 - [x] Phase 4, Step 13 — All three brand pipelines complete (2026-10-01): Carrier (4 PDFs), Mitsubishi (2 PDFs via mitsubishitechinfo.ca), Daikin (5 PDFs via daikincomfort.com). 11 manuals total, all Docling-extracted. RAG index rebuilt: 1904 chunks (34 error_table Carrier + 1870 troubleshooting all brands). Mitsubishi + Daikin error-code extraction deferred (different table formats — covered via prose chunks). Manifest deduplicated to 11 rows.
 - [x] Phase 4, Step 14 — Thin end-to-end slice complete (2026-09-29): RAG index built (503 chunks in ChromaDB), copilot.py end-to-end inference script written (image → VLM → RAG → grounded answer). RAG retrieval verified: E1 hit at score 0.77, correct causes returned. Graceful quota fallback: returns direct RAG extract when Gemini unavailable. VLM image path code-complete; test deferred to next session (daily quota exhausted: 20 req/day free tier). Risk 1 (Docling table quality) resolved. Risk 4 (RAG retrieval) validated.
 - [x] Phase 4, Step 15 — Eval script written and baseline recorded (2026-10-01): scripts/eval/eval_rag.py, results in data/eval/eval_results.jsonl. Baseline (RAG-only, no GEMINI_API_KEY): exact 5/5, edge 5/6, fuzzy 4 queued for review. Overall PASS (≥4/5 exact, ≥4/6 edge). Known gap: case 11 (torque spec refusal) fails without LLM synthesis; cases 4/6-9 return irrelevant error_table chunks for no-code prose queries — both fixed by LLM synthesis layer when GEMINI_API_KEY is set.
-- [ ] Phase 4, Steps 16-18 — Incremental capability + re-eval, API/UI wrap, deploy + re-eval
-- [ ] Phase 5, Steps 19-20 — Handoff doc, retrospective
+- [x] Phase 4, Step 16 — Incremental capability (committed): brand-filtered retrieval fix, MXZ + PUZ Mitsubishi manuals added (PUZ via PyMuPDF fallback), index rebuilt to 2362 chunks, eval routing updated for cases 5 and 12.
+- [x] Phase 4, Step 17 — FastAPI wrap (committed): `/query` (text) and `/query/image` (VLM).
+- [~] Phase 4, Step 18 — Fly.io config committed (Dockerfile, .dockerignore, fly.toml). **NOT confirmed deployed, and the eval has NOT been re-run against a deployed instance** — the methodology's Step 18 is not satisfied until that happens. The Dockerfile also pre-dates the speech/vision layers (see Section 19 deploy notes).
+- [x] Phase 5, Step 19 — `HANDOFF.md` written (zero-context reader doc).
+- [x] Phase 5, Step 20 — Retrospective written (see HANDOFF.md).
+- [~] Phase 6 (added 2026-10-17 at user request) — Multimodal extension: UI + computer vision + speech, built by role-separated parallel agents. See Section 19. Built and committed; independent audit in progress/see Section 19.
 
 ---
 
@@ -261,6 +265,7 @@ Portfolio/FDE-interview-prep. No real users, no production SLA. Demo path must w
 
 (Newest first. Add an entry here after every step — don't batch.)
 
+- **2026-10-17** — Multimodal extension (Phase 6) built via parallel role agents with disjoint file ownership (speech / vision / UI) + independent read-only auditor. Chose local faster-whisper over Gemini for ASR (quota), and made vision degrade to local OCR instead of 503 when Gemini is unavailable. Hardened `/query` after the speech agent found raw fields interpolated into the LLM prompt. Everything Gemini-dependent remains unverified (quota/timeouts) and is recorded as such in Section 19. Commits `81d27f2`, `7156b2a`.
 - **2026-10-01** — Phase 4 Step 15 complete: eval script (scripts/eval/eval_rag.py) written and run against 15 seed use-cases. Baseline RAG-only scores: exact 5/5, edge 5/6 (case 11 torque-spec refusal fails without LLM), fuzzy 4 queued for human review. Overall PASS. Root cause of case 11 failure confirmed: torque spec data does not exist in any indexed manual — retrieval is working correctly, LLM synthesis layer is what produces the correct refusal. Decision: fix is option 1 (LLM synthesis via GEMINI_API_KEY), not a retrieval change.
 - **2026-10-01** — Phase 4 Step 13 complete: Mitsubishi (2 PDFs, mitsubishitechinfo.ca) and Daikin (5 PDFs, daikincomfort.com) pipelines added. URL-seeded spider pattern (same as Carrier). Manifest deduplicated to 11 rows. Docling extracted all 7 new PDFs (2h CPU, M-series Mac). RAG index rebuilt: 503 → 1904 chunks. Daikin/Mitsubishi error-code table extraction yields 0 new codes (different table layout from Carrier); covered via 1870 troubleshooting prose chunks across all brands.
 - **2026-09-29** — Phase 4 Step 14 complete: RAG index built (503 chunks: 34 error_table + 469 troubleshooting, ChromaDB embedded). End-to-end inference script (copilot.py) written with image mode (VLM → RAG → LLM synthesis) and override mode (--brand/--model/--code). RAG retrieval validated: E1 → score 0.77, correct fault name + causes. Graceful 429 fallback added. VLM image test deferred — gemini-3.8-flash free tier is 20 req/day, exhausted during Step 13 VLM extraction attempts. Will test first thing next session. Synthetic test images generated in data/synth/test/. Risk 4 (RAG retrieval quality) validated on Carrier data.
@@ -481,12 +486,42 @@ The deployed app needs to load a ChromaDB index and make Gemini API calls. Chrom
 
 ---
 
+## 19. Phase 6 — Multimodal extension (UI + computer vision + speech)
+
+Added 2026-10-17 at the user's request: "work with sub agents, assign different roles, I need a UI for interaction, computer vision and speech recognition." This is beyond the original 20-step plan, so it is recorded as its own phase.
+
+### How it was run
+Lead (this session) defined an API contract, did the one shared-file edit (`api/app.py` auto-mounts `api/speech.py` and `api/vision.py` routers if present, and serves `ui/` at `/`), then launched three builder agents in parallel with **disjoint file ownership** so they could not collide, plus a fourth independent auditor afterwards (read-only, instructed to re-derive claims rather than trust reports). Builders did not commit; the lead verified (all tests together) and committed.
+
+| Role | Owns | What it delivered |
+|---|---|---|
+| Speech engineer | `api/speech.py`, `scripts/speech/`, `tests/speech/` | `POST /transcribe`, `POST /query/voice`, `GET /speech/health`. Local faster-whisper (`small.en`, int8) — chosen over Gemini because Gemini's free tier is ~20 req/day. Deterministic spoken-code parser (`scripts/speech/parse_spoken.py`: "E seven"→E7, "forty M A Q"→40MAQ). A code with no brand returns "which brand?" (same code means different things per brand). Own PyAV decoder because faster-whisper 1.2.1's `decode_audio` crashes on PyAV ≥17. |
+| Computer-vision engineer | `api/vision.py`, `scripts/vision/`, `tests/vision/`, `data/eval/vision/` | `POST /vision/quality` (local, ~14 ms, no API), `POST /vision/analyze`, and `/query/image` extended with a `vision` object (per-field confidence strings high/medium/low, image_type, quality, warnings). OpenCV preprocessing, rapidocr cross-check, a seven-segment decoder that abstains rather than guesses, schema-constrained Gemini read with fallback to local OCR. Error bodies (404/422/500) also carry `vision`. |
+| Frontend/UX engineer | `ui/` | No-build vanilla-JS mobile-first app: camera/photo, hold-to-talk + tap-to-toggle voice with level meter, typed form, editable "what I read/heard" fields, checklist-style results with confidence + "verify against manual" banner, read-aloud, history. `?mock=1` demo mode, `?mock=1&fakemic=1`. XSS-safe by construction (text nodes only). |
+| Lead | `api/app.py`, `scripts/infer/copilot.py` hardening | Pydantic whitelist validation on `/query`; `_clean()` strips brand/model/code to an identifier charset inside `generate_answer` (covers voice + vision paths); retrieved chunks framed as untrusted data in the prompt; no-data now HTTP 404 (was 500) via a `no_data` flag; the no-key fallback no longer returns an arbitrary prose chunk; `source_reference` resolves the stored sha prefix to the manual file name via the manifest. |
+| Independent auditor | read-only | Adversarial QA of guardrails, injection on all three channels, UI XSS, upload robustness, claim re-derivation, secrets, deploy readiness. Findings: see "Audit status" below. |
+
+### Measured results (what is and is not proven)
+- Tests: 121 Python (speech 83, vision 38) + 8 hardening (`tests/api`) + 12 JS audio-logic tests. `pytest` prints a `libc++abi recursive_mutex` message at interpreter exit after passing — teardown noise from native libs, not a test failure.
+- Speech, TTS clips (optimistic — no real human voices): clean 24/24 fully correct; 10 dB SNR 22/24; 0 dB 16/24, word error 16%. At 0 dB it returns *no* code rather than a wrong one. Domain prompt matters (base.en 3/12 → 12/12 with it).
+- Vision, **local path only**, 144 synthetic images: overall roughly 70–90% depending on degradation (clean 90%, heavy blur 40%, glare 40%). On 98 seven-segment images general OCR alone was 31 right / 34 confidently wrong; the segment decoder was 40 right / 0 wrong (abstains otherwise). **The decoder was tuned on the same synthetic set, so these numbers are optimistic**; it assumes a dark panel and frontal view.
+- **UNVERIFIED — every real-Gemini behaviour** (structured VLM read, unreadable-plate refusal for eval case #14 with a real model, answer synthesis): calls timed out (504), 503'd or hit 429 quota during all agents' runs. Treated as unverified, not as passing. Real microphone/MediaRecorder (incl. iOS Safari), real camera, real human speech, real phone photos were also not tested.
+
+### Known issues / deploy notes
+- Fly.io: `small.en` needs ~500 MB RAM and the model must be baked in or cached on a writable volume; rapidocr models ship in the wheel; the Dockerfile/fly.toml pre-date these layers — **re-check size/RAM before any deploy** (auditor reviewed this; see below).
+- `generate_answer` is slow (Gemini retries on 503 can add ~100 s); the speech route wraps it in a 90 s timeout and falls back to direct RAG extract; the image route runs it in a threadpool so a stuck call no longer freezes `/health` and `/vision/quality`.
+- `requirements.txt` now pins faster-whisper, rapidfuzz, opencv-python-headless, rapidocr, onnxruntime. The venv previously had both `opencv-python` and `-headless`, which conflict; fixed (headless only).
+- `data/eval/eval_results.jsonl` shows as modified in the working tree from earlier eval runs; not committed in this phase.
+
+### Audit status
+Independent auditor launched 2026-10-17 after the hardening commit (`7156b2a`). Its findings are not yet recorded here; the lead must record them (and fixes) below before calling the guardrails done.
+
+---
+
 ## 8. Next action
 
-**Phase 2, Step 6 data-notes written (Section 13) — awaiting user review.**
-
-**Phase 4 Step 12 complete. Next: Step 13 — run the data pipeline.**
-
-Step 13: run Docling on one PDF per brand first (Risk 1 test from Step 10),
-then run all three spiders against live sources, then VLM extraction. — design the
-shape of the data we want out of the pipeline (not the shape we were handed).
+1. Read the auditor's report, fix confirmed critical/high findings, re-test, record each in the decisions log (Section 7), commit + push per fix.
+2. Re-run the 15-case eval (`scripts/eval/eval_rag.py`) now that `/query` was hardened, and record the numbers — the Step 15 baseline pre-dates the changes. With a working `GEMINI_API_KEY`/quota also run the Gemini-dependent cases (11, 14) which have never passed under real synthesis.
+3. Test on real inputs the project has never seen: 20–30 real phone photos and a few real voice recordings from a phone (the `own_photos` gold set from the original plan still does not exist).
+4. Resolve Step 18 properly: rebuild the container with the new layers, deploy, re-run the eval against the deployed URL.
+5. Update `HANDOFF.md` (it does not describe the UI, voice or vision endpoints yet) and `README.md`.
