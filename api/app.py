@@ -15,6 +15,8 @@ Deploy (Fly.io):
 """
 from __future__ import annotations
 
+import importlib
+import importlib.util
 import os
 import sys
 import tempfile
@@ -23,6 +25,7 @@ from typing import Optional
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 # Make the scripts/infer module importable
@@ -132,53 +135,51 @@ def query_text(req: TextQueryRequest):
 async def query_image(image: UploadFile = File(...)):
     """Accept a photo of a nameplate or error display; extract brand/model/code
     via Gemini VLM, then run the RAG lookup."""
-    if not os.environ.get("GEMINI_API_KEY"):
-        raise HTTPException(
-            status_code=503,
-            detail="GEMINI_API_KEY not set — image mode unavailable.",
-        )
+    # Vision step lives in api/vision.py + scripts/vision/: EXIF fix/downscale/quality,
+    # schema-constrained Gemini (falls back to local OCR if no key/quota), normalisation,
+    # OCR cross-check. Returns the contract `vision` object.
+    from fastapi.concurrency import run_in_threadpool
+    from fastapi.responses import JSONResponse
 
-    # Write the upload to a temp file (VLM needs a path)
-    suffix = Path(image.filename or "upload.jpg").suffix or ".jpg"
-    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
-        tmp.write(await image.read())
-        tmp_path = Path(tmp.name)
+    from api.vision import analyze_image_bytes
+    from scripts.vision import pipeline as _vp
 
+    data = await image.read()
+    if not data:
+        raise HTTPException(status_code=400, detail="Empty upload.")
     try:
-        vlm_result = vlm_extract(tmp_path)
-    finally:
-        tmp_path.unlink(missing_ok=True)
+        vision, extras = await run_in_threadpool(analyze_image_bytes, data)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
 
-    brand = vlm_result.get("brand", "").lower().strip()
-    model_family = vlm_result.get("model_family", "").strip()
-    error_code = vlm_result.get("error_code", "").strip().upper()
-    vlm_confidence = vlm_result.get("confidence", "low")
+    def _fail(status: int, detail: str):
+        return JSONResponse(status_code=status, content={"detail": detail, "vision": vision})
+
+    if extras.get("unavailable"):
+        return _fail(503, "Image mode unavailable: no GEMINI_API_KEY and local OCR not installed.")
+
+    brand = vision["brand"].lower().strip()
+    model_family = vision["model_family"].strip()
+    error_code = vision["error_code"].strip().upper()
+    vlm_confidence = _vp.overall_confidence(vision)
 
     if not brand and not error_code:
-        raise HTTPException(
-            status_code=422,
-            detail=(
-                "VLM could not extract brand or error code from the image. "
-                f"Raw VLM result: {vlm_result}"
-            ),
-        )
+        return _fail(422, "Could not read a brand or error code from the image. "
+                          + " ".join(vision["warnings"][:3]))
 
-    chunks = retrieve(brand, model_family, error_code)
+    chunks = await run_in_threadpool(retrieve, brand, model_family, error_code)
     if not chunks:
-        raise HTTPException(
-            status_code=404,
-            detail=(
-                f"VLM extracted brand={brand!r} model={model_family!r} "
-                f"code={error_code!r} but no matching context found in the RAG index."
-            ),
-        )
+        return _fail(404, (
+            f"Read brand={brand!r} model={model_family!r} "
+            f"code={error_code!r} but no matching context found in the RAG index."
+        ))
 
-    answer = generate_answer(brand, model_family, error_code, chunks)
+    answer = await run_in_threadpool(generate_answer, brand, model_family, error_code, chunks)
 
     if "error" in answer:
-        raise HTTPException(status_code=500, detail=answer["error"])
+        return _fail(500, answer["error"])
 
-    return CopilotResponse(
+    resp = CopilotResponse(
         brand=answer.get("brand", brand),
         model_family=answer.get("model_family", model_family),
         error_code=answer.get("error_code", error_code),
@@ -190,3 +191,18 @@ async def query_image(image: UploadFile = File(...)):
         vlm_confidence=vlm_confidence,
         note=answer.get("note") or answer.get("_note"),
     )
+    # CopilotResponse has no `vision` field; return JSON directly so the extra key is kept.
+    return JSONResponse(content={**resp.model_dump(), "vision": vision})
+
+
+# ---------------------------------------------------------------------------
+# Modular routers (api/speech.py, api/vision.py) + static UI (ui/)
+# Mounted last so the "/" static mount never shadows an API route.
+# ---------------------------------------------------------------------------
+
+for _name in ("speech", "vision"):
+    if importlib.util.find_spec(f"api.{_name}"):
+        app.include_router(importlib.import_module(f"api.{_name}").router)
+
+if (REPO / "ui").is_dir():
+    app.mount("/", StaticFiles(directory=REPO / "ui", html=True), name="ui")

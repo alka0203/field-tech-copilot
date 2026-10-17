@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f1efe8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1216" media="(prefers-color-scheme: dark)">
+<title>FieldTech Copilot</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2314181c'/%3E%3Cpath d='M16 6v20M6 16h20M9 9l14 14M23 9L9 23' stroke='%23f5b700' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="js/main.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="top">
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="wrap top-in">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18"/></svg>
+      </span>
+      <div>
+        <h1>FieldTech Copilot</h1>
+        <p class="sub">HVAC fault lookup from the service manuals</p>
+      </div>
+    </div>
+    <div class="top-tools">
+      <span id="conn" class="chip-status" data-s="" role="status"><i aria-hidden="true"></i><span class="lbl" id="connTxt">Checking</span></span>
+      <button id="themeBtn" class="btn-theme" type="button" aria-label="Colour theme: auto. Tap to change.">Auto</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="offlineBanner" class="banner banner-bad" role="status" hidden>You are offline. New lookups need a connection. Recent lookups below still open.</div>
+  <div id="mockBanner" class="banner banner-info" hidden><strong>Demo mode.</strong> Answers are canned sample data, not from the manuals. Remove <span class="mono">?mock=1</span> from the address to use the real server.</div>
+</div>
+
+<main id="main" class="wrap" tabindex="-1">
+
+  <section id="home" class="card empty" aria-labelledby="homeH">
+    <h2 id="homeH">Point, speak or type</h2>
+    <p class="muted">Get the fault name, likely causes and fix steps for an error code, straight from the manufacturer's service manual.</p>
+    <ul class="steps-hint">
+      <li><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span><span><strong>Photo</strong><br><span class="muted small">Nameplate or error display. Get close, hold steady, avoid glare.</span></span></li>
+      <li><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><span><strong>Voice</strong><br><span class="muted small">Hold to talk, or tap once and tap again. Say brand, model and code.</span></span></li>
+      <li><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.01M11 10h.01M15 10h.01M7 14h10"/></svg></span><span><strong>Type</strong><br><span class="muted small">Pick the brand, add model family and the code on the display.</span></span></li>
+    </ul>
+  </section>
+
+  <!-- TYPE -->
+  <section id="typePanel" class="card" aria-labelledby="typeH" hidden>
+    <h2 id="typeH">Look up a fault code</h2>
+    <form id="typeForm" novalidate>
+      <div class="field">
+        <label for="fBrand">Brand</label>
+        <select id="fBrand" name="brand">
+          <option value="">Select brand</option>
+          <option value="carrier">Carrier</option>
+          <option value="daikin">Daikin</option>
+          <option value="mitsubishi">Mitsubishi</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fModel">Model family <span class="opt">optional</span></label>
+        <input id="fModel" name="model_family" type="text" list="families" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. 40MAQ">
+        <datalist id="families"></datalist>
+      </div>
+      <div class="field">
+        <label for="fCode">Error code</label>
+        <input id="fCode" class="mono" name="error_code" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. E1" aria-describedby="typeErr">
+      </div>
+      <p id="typeErr" class="field-err" role="alert" hidden></p>
+      <div class="row" style="margin-top:16px">
+        <button class="btn btn-primary" type="submit">Look up</button>
+        <button class="btn" type="button" id="typeClose">Close</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- PHOTO -->
+  <section id="photoPanel" class="card" aria-labelledby="photoH" hidden>
+    <div class="card-head"><span class="tag">Photo</span><h2 id="photoH">Your photo</h2></div>
+    <img id="photoPreview" class="preview" alt="Preview of the photo you chose" hidden>
+    <p id="photoStatus" class="muted" role="status"></p>
+    <div id="photoWarn" class="warn-box" hidden>
+      <strong id="photoWarnTitle">This photo may be hard to read. Retake is best; send it anyway only if the code is clearly visible.</strong>
+      <ul id="photoWarnList"></ul>
+    </div>
+    <div class="row" id="photoActions" hidden>
+      <button class="btn btn-primary" type="button" id="photoRetake">Retake</button>
+      <button class="btn" type="button" id="photoUse">Use anyway</button>
+    </div>
+    <div class="row" id="photoLibRow">
+      <button class="btn btn-sm" type="button" id="photoLib">Choose from library</button>
+      <button class="btn btn-sm" type="button" id="photoClose">Close</button>
+    </div>
+  </section>
+
+  <!-- VOICE -->
+  <section id="voicePanel" class="card" aria-labelledby="voiceH" hidden>
+    <div class="card-head"><span class="tag">Voice</span><h2 id="voiceH">Voice lookup</h2></div>
+    <div id="voiceLive" hidden>
+      <div class="rec-head">
+        <span class="rec-state"><span class="rec-dot" aria-hidden="true"></span><span id="recState">Listening</span></span>
+        <span class="rec-time" id="recTime" aria-hidden="true">0:00 / 0:20</span>
+      </div>
+      <div class="meter" id="recMeter" style="margin-top:12px" aria-hidden="true"><div class="meter-fill" id="recFill"></div></div>
+      <p class="muted small" style="margin-top:12px">Say brand, model and code, e.g. <em>"Daikin FTXS, error U4"</em>. Recording stops by itself after 20 seconds.</p>
+      <div class="row" style="margin-top:12px">
+        <button class="btn btn-primary" type="button" id="recStop">Stop and send</button>
+        <button class="btn" type="button" id="recCancel">Cancel</button>
+      </div>
+    </div>
+    <div id="voiceMsg" hidden>
+      <p id="voiceMsgText" role="alert"></p>
+      <div class="row" style="margin-top:12px">
+        <button class="btn btn-primary" type="button" id="voiceToType">Type instead</button>
+        <button class="btn" type="button" id="voiceClose">Close</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="readout"></div>
+  <div id="output"></div>
+
+  <section id="historySec" aria-labelledby="histH">
+    <div class="sec-head" style="margin-bottom:8px">
+      <h3 id="histH">Recent lookups</h3>
+      <button class="link-btn" type="button" id="clearHist" style="margin-left:auto" hidden>Clear</button>
+    </div>
+    <p id="histEmpty" class="muted small">Nothing yet. Your last 10 lookups will appear here on this phone.</p>
+    <ul id="historyList" class="hist-list"></ul>
+  </section>
+</main>
+
+<nav class="actionbar" aria-label="Lookup methods">
+  <div class="wrap">
+    <button class="act" type="button" id="btnPhoto" aria-label="Photo. Take or choose a picture of the unit">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+      <span>Photo</span>
+    </button>
+    <button class="act act-voice" type="button" id="btnVoice" aria-pressed="false" aria-label="Voice. Hold to talk, or tap to start and tap again to stop and send" aria-describedby="voiceHelp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+      <span id="voiceLabel">Voice</span>
+      <small id="voiceHelp">hold or tap</small>
+    </button>
+    <button class="act" type="button" id="btnType" aria-label="Type. Enter brand, model and error code">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.01M11 10h.01M15 10h.01M7 14h10"/></svg>
+      <span>Type</span>
+    </button>
+  </div>
+</nav>
+
+<input id="fileCam" type="file" accept="image/*" capture="environment" hidden>
+<input id="fileLib" type="file" accept="image/*" hidden>
+
+<div id="announce" class="sr-only" role="status" aria-live="polite"></div>
+<div id="alertLive" class="sr-only" role="alert"></div>
+<div id="toast" class="toast" hidden></div>
+<div id="dropzone" class="drop" hidden>Drop the photo to read it</div>
+</body>
+</html>

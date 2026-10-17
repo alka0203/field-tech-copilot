@@ -43,3 +43,16 @@ pyrit>=0.6
 # Labeling
 label-studio>=1.13
 python-multipart
+
+# Speech recognition (local, no API quota)
+faster-whisper==1.2.1
+rapidfuzz>=3.14
+
+# Computer vision (local preprocessing + OCR cross-check)
+opencv-python-headless==5.0.0.93
+rapidocr==3.9.2
+onnxruntime==1.30.0
+python-dotenv>=1.0
+
+# Dev / tests
+pytest>=9

@@ -69,6 +69,23 @@ def vlm_extract(image_path: Path, retries: int = 4) -> dict:
     client = genai.Client(api_key=api_key)
     img_bytes = image_path.read_bytes()
     mime = "image/png" if image_path.suffix.lower() == ".png" else "image/jpeg"
+
+    # Preferred path: schema-constrained extraction with per-field confidence and
+    # explicit refusal (scripts/vision/vlm.py). Falls through to the legacy
+    # prompt-and-parse below on any failure.
+    try:
+        sys.path.insert(0, str(REPO))
+        from scripts.vision import vlm as _vv
+        raw = _vv.extract(img_bytes, mime=mime)
+        order = ["low", "medium", "high"]
+        fc = raw.get("field_confidence", {})
+        vals = [fc.get(k, "low") for k in ("brand", "model_family", "error_code") if raw.get(k)]
+        return {"brand": raw.get("brand", "").lower(), "model_family": raw.get("model_family", ""),
+                "error_code": raw.get("error_code", ""),
+                "confidence": min(vals, key=order.index) if vals else "low",
+                "image_type": raw.get("image_type", "other")}
+    except Exception as e:  # noqa: BLE001
+        print(f"[warn] structured VLM path failed ({e}); using legacy prompt", file=sys.stderr)
     image_part = types.Part.from_bytes(data=img_bytes, mime_type=mime)
     for attempt in range(retries):
         try:

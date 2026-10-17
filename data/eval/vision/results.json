@@ -1,0 +1,5103 @@
+{
+ "generated": "2026-10-17 21:53:10",
+ "n_images": 144,
+ "local": {
+  "aggregate": {
+   "overall_excl_rusted": {
+    "n": 140,
+    "correct": 95,
+    "accuracy": 0.679
+   },
+   "by_degradation": {
+    "clean": {
+     "n": 20,
+     "correct": 18,
+     "accuracy": 0.9
+    },
+    "blur_mild": {
+     "n": 20,
+     "correct": 16,
+     "accuracy": 0.8
+    },
+    "blur_heavy": {
+     "n": 20,
+     "correct": 8,
+     "accuracy": 0.4
+    },
+    "dark": {
+     "n": 20,
+     "correct": 16,
+     "accuracy": 0.8
+    },
+    "glare": {
+     "n": 20,
+     "correct": 8,
+     "accuracy": 0.4
+    },
+    "rot15": {
+     "n": 20,
+     "correct": 15,
+     "accuracy": 0.75
+    },
+    "rot90": {
+     "n": 20,
+     "correct": 14,
+     "accuracy": 0.7
+    }
+   },
+   "by_kind": {
+    "display": {
+     "n": 70,
+     "correct": 38,
+     "accuracy": 0.543
+    },
+    "flat_display": {
+     "n": 28,
+     "correct": 21,
+     "accuracy": 0.75
+    },
+    "nameplate": {
+     "n": 42,
+     "correct": 36,
+     "accuracy": 0.857
+    },
+    "rusted": {
+     "n": 4,
+     "correct": 4,
+     "accuracy": 1.0
+    }
+   },
+   "by_kind_x_degradation": {
+    "display/clean": {
+     "n": 10,
+     "correct": 8,
+     "accuracy": 0.8
+    },
+    "display/blur_mild": {
+     "n": 10,
+     "correct": 8,
+     "accuracy": 0.8
+    },
+    "display/blur_heavy": {
+     "n": 10,
+     "correct": 5,
+     "accuracy": 0.5
+    },
+    "display/dark": {
+     "n": 10,
+     "correct": 6,
+     "accuracy": 0.6
+    },
+    "display/glare": {
+     "n": 10,
+     "correct": 0,
+     "accuracy": 0.0
+    },
+    "display/rot15": {
+     "n": 10,
+     "correct": 7,
+     "accuracy": 0.7
+    },
+    "display/rot90": {
+     "n": 10,
+     "correct": 4,
+     "accuracy": 0.4
+    },
+    "flat_display/clean": {
+     "n": 4,
+     "correct": 4,
+     "accuracy": 1.0
+    },
+    "flat_display/blur_mild": {
+     "n": 4,
+     "correct": 2,
+     "accuracy": 0.5
+    },
+    "flat_display/blur_heavy": {
+     "n": 4,
+     "correct": 3,
+     "accuracy": 0.75
+    },
+    "flat_display/dark": {
+     "n": 4,
+     "correct": 4,
+     "accuracy": 1.0
+    },
+    "flat_display/glare": {
+     "n": 4,
+     "correct": 2,
+     "accuracy": 0.5
+    },
+    "flat_display/rot15": {
+     "n": 4,
+     "correct": 2,
+     "accuracy": 0.5
+    },
+    "flat_display/rot90": {
+     "n": 4,
+     "correct": 4,
+     "accuracy": 1.0
+    },
+    "nameplate/clean": {
+     "n": 6,
+     "correct": 6,
+     "accuracy": 1.0
+    },
+    "nameplate/blur_mild": {
+     "n": 6,
+     "correct": 6,
+     "accuracy": 1.0
+    },
+    "nameplate/blur_heavy": {
+     "n": 6,
+     "correct": 0,
+     "accuracy": 0.0
+    },
+    "nameplate/dark": {
+     "n": 6,
+     "correct": 6,
+     "accuracy": 1.0
+    },
+    "nameplate/glare": {
+     "n": 6,
+     "correct": 6,
+     "accuracy": 1.0
+    },
+    "nameplate/rot15": {
+     "n": 6,
+     "correct": 6,
+     "accuracy": 1.0
+    },
+    "nameplate/rot90": {
+     "n": 6,
+     "correct": 6,
+     "accuracy": 1.0
+    }
+   },
+   "seven_segment_ablation": {
+    "clean": {
+     "n": 14,
+     "ocr_only_correct": 7,
+     "ocr_only_wrong": 5,
+     "segdecoder_only_correct": 8,
+     "segdecoder_only_wrong": 0,
+     "combined_correct": 12
+    },
+    "blur_mild": {
+     "n": 14,
+     "ocr_only_correct": 5,
+     "ocr_only_wrong": 5,
+     "segdecoder_only_correct": 10,
+     "segdecoder_only_wrong": 0,
+     "combined_correct": 10
+    },
+    "blur_heavy": {
+     "n": 14,
+     "ocr_only_correct": 3,
+     "ocr_only_wrong": 5,
+     "segdecoder_only_correct": 6,
+     "segdecoder_only_wrong": 0,
+     "combined_correct": 8
+    },
+    "dark": {
+     "n": 14,
+     "ocr_only_correct": 6,
+     "ocr_only_wrong": 5,
+     "segdecoder_only_correct": 5,
+     "segdecoder_only_wrong": 0,
+     "combined_correct": 10
+    },
+    "glare": {
+     "n": 14,
+     "ocr_only_correct": 1,
+     "ocr_only_wrong": 3,
+     "segdecoder_only_correct": 1,
+     "segdecoder_only_wrong": 0,
+     "combined_correct": 2
+    },
+    "rot15": {
+     "n": 14,
+     "ocr_only_correct": 7,
+     "ocr_only_wrong": 2,
+     "segdecoder_only_correct": 2,
+     "segdecoder_only_wrong": 0,
+     "combined_correct": 9
+    },
+    "rot90": {
+     "n": 14,
+     "ocr_only_correct": 2,
+     "ocr_only_wrong": 9,
+     "segdecoder_only_correct": 8,
+     "segdecoder_only_wrong": 0,
+     "combined_correct": 8
+    },
+    "ALL": {
+     "n": 98,
+     "ocr_only_correct": 31,
+     "ocr_only_wrong": 34,
+     "segdecoder_only_correct": 40,
+     "segdecoder_only_wrong": 0,
+     "combined_correct": 59
+    }
+   },
+   "nameplate_full_model_exact": {
+    "n": 42,
+    "correct": 36,
+    "accuracy": 0.857
+   },
+   "nameplate_brand_correct": {
+    "n": 42,
+    "correct": 36,
+    "accuracy": 0.857
+   }
+  },
+  "quality": {
+   "detection_rate_by_degradation": {
+    "clean": {
+     "n": 20,
+     "flagged_unusable": 0.05,
+     "flag_blur": 0.0,
+     "flag_dark": 0.05,
+     "flag_over": 0.0,
+     "flag_glare": 0.0
+    },
+    "blur_mild": {
+     "n": 20,
+     "flagged_unusable": 0.7,
+     "flag_blur": 0.7,
+     "flag_dark": 0.05,
+     "flag_over": 0.0,
+     "flag_glare": 0.0,
+     "target_flag": "blur",
+     "detection_rate": 0.7
+    },
+    "blur_heavy": {
+     "n": 20,
+     "flagged_unusable": 1.0,
+     "flag_blur": 1.0,
+     "flag_dark": 0.05,
+     "flag_over": 0.0,
+     "flag_glare": 0.0,
+     "target_flag": "blur",
+     "detection_rate": 1.0
+    },
+    "dark": {
+     "n": 20,
+     "flagged_unusable": 1.0,
+     "flag_blur": 0.0,
+     "flag_dark": 1.0,
+     "flag_over": 0.0,
+     "flag_glare": 0.0,
+     "target_flag": "dark",
+     "detection_rate": 1.0
+    },
+    "glare": {
+     "n": 20,
+     "flagged_unusable": 0.05,
+     "flag_blur": 0.05,
+     "flag_dark": 0.0,
+     "flag_over": 0.0,
+     "flag_glare": 1.0,
+     "target_flag": "glare",
+     "detection_rate": 1.0
+    },
+    "rot15": {
+     "n": 20,
+     "flagged_unusable": 0.05,
+     "flag_blur": 0.0,
+     "flag_dark": 0.05,
+     "flag_over": 0.0,
+     "flag_glare": 0.0
+    },
+    "rot90": {
+     "n": 20,
+     "flagged_unusable": 0.05,
+     "flag_blur": 0.0,
+     "flag_dark": 0.05,
+     "flag_over": 0.0,
+     "flag_glare": 0.0
+    }
+   },
+   "blur_score_by_degradation": {
+    "clean": {
+     "min": 286.7,
+     "median": 602.8,
+     "max": 1426.2
+    },
+    "blur_mild": {
+     "min": 3.8,
+     "median": 16.9,
+     "max": 98.0
+    },
+    "blur_heavy": {
+     "min": 1.0,
+     "median": 2.6,
+     "max": 11.6
+    },
+    "dark": {
+     "min": 337.2,
+     "median": 641.2,
+     "max": 1114.1
+    },
+    "glare": {
+     "min": 39.3,
+     "median": 331.7,
+     "max": 789.9
+    },
+    "rot15": {
+     "min": 228.7,
+     "median": 452.2,
+     "max": 1188.2
+    },
+    "rot90": {
+     "min": 286.8,
+     "median": 602.5,
+     "max": 1427.0
+    }
+   },
+   "latency_ms": {
+    "quality_median": 14.1,
+    "quality_p95": 16.5,
+    "local_pipeline_median": 223.5
+   }
+  },
+  "rows": [
+   {
+    "id": "display_E1__clean",
+    "kind": "display",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 437.08,
+     "brightness": 167.43,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 26.5,
+    "total_ms": 456,
+    "ocr_lines": [
+     "E1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "E1",
+    "seg_code": "E1"
+   },
+   {
+    "id": "display_E1__blur_mild",
+    "kind": "display",
+    "degradation": "blur_mild",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 15.28,
+     "brightness": 167.48,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.8,
+    "total_ms": 492,
+    "ocr_lines": [
+     "\u7530"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": "E1"
+   },
+   {
+    "id": "display_E1__blur_heavy",
+    "kind": "display",
+    "degradation": "blur_heavy",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 1.47,
+     "brightness": 167.57,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.6,
+    "total_ms": 475,
+    "ocr_lines": [
+     "\u7530"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": "E1"
+   },
+   {
+    "id": "display_E1__dark",
+    "kind": "display",
+    "degradation": "dark",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 632.28,
+     "brightness": 36.94,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.2,
+    "total_ms": 241,
+    "ocr_lines": [
+     "E1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "E1",
+    "seg_code": ""
+   },
+   {
+    "id": "display_E1__glare",
+    "kind": "display",
+    "degradation": "glare",
+    "ok": false,
+    "pred": "",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 319.94,
+     "brightness": 175.22,
+     "glare_fraction": 0.0325,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 15.6,
+    "total_ms": 451,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_E1__rot15",
+    "kind": "display",
+    "degradation": "rot15",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 387.72,
+     "brightness": 167.44,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.6,
+    "total_ms": 483,
+    "ocr_lines": [
+     "\u7530"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": "E1"
+   },
+   {
+    "id": "display_E1__rot90",
+    "kind": "display",
+    "degradation": "rot90",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 437.35,
+     "brightness": 167.43,
+     "glare_fraction": 0.0,
+     "width": 960,
+     "height": 1280,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 16.8,
+    "total_ms": 477,
+    "ocr_lines": [
+     "E1"
+    ],
+    "ocr_rotation": 270,
+    "ocr_code": "E1",
+    "seg_code": "E1"
+   },
+   {
+    "id": "display_U4__clean",
+    "kind": "display",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "U4",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 529.83,
+     "brightness": 167.06,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.7,
+    "total_ms": 173,
+    "ocr_lines": [
+     "04"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "04",
+    "seg_code": "U4"
+   },
+   {
+    "id": "display_U4__blur_mild",
+    "kind": "display",
+    "degradation": "blur_mild",
+    "ok": true,
+    "pred": "U4",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 17.55,
+     "brightness": 167.1,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.2,
+    "total_ms": 166,
+    "ocr_lines": [
+     "04"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "04",
+    "seg_code": "U4"
+   },
+   {
+    "id": "display_U4__blur_heavy",
+    "kind": "display",
+    "degradation": "blur_heavy",
+    "ok": false,
+    "pred": "04",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 1.57,
+     "brightness": 167.2,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.7,
+    "total_ms": 167,
+    "ocr_lines": [
+     "04"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "04",
+    "seg_code": ""
+   },
+   {
+    "id": "display_U4__dark",
+    "kind": "display",
+    "degradation": "dark",
+    "ok": true,
+    "pred": "U4",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 734.3,
+     "brightness": 36.86,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.3,
+    "total_ms": 170,
+    "ocr_lines": [
+     "04"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "04",
+    "seg_code": "U4"
+   },
+   {
+    "id": "display_U4__glare",
+    "kind": "display",
+    "degradation": "glare",
+    "ok": false,
+    "pred": "",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 267.32,
+     "brightness": 174.72,
+     "glare_fraction": 0.0312,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 15.0,
+    "total_ms": 444,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_U4__rot15",
+    "kind": "display",
+    "degradation": "rot15",
+    "ok": true,
+    "pred": "U4",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 441.07,
+     "brightness": 167.06,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.7,
+    "total_ms": 440,
+    "ocr_lines": [
+     "-A"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": "U4"
+   },
+   {
+    "id": "display_U4__rot90",
+    "kind": "display",
+    "degradation": "rot90",
+    "ok": true,
+    "pred": "U4",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 531.13,
+     "brightness": 167.06,
+     "glare_fraction": 0.0,
+     "width": 960,
+     "height": 1280,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.0,
+    "total_ms": 313,
+    "ocr_lines": [
+     "60"
+    ],
+    "ocr_rotation": 90,
+    "ocr_code": "60",
+    "seg_code": "U4"
+   },
+   {
+    "id": "display_P8__clean",
+    "kind": "display",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "P8",
+    "truth": "P8",
+    "quality": {
+     "blur_score": 741.1,
+     "brightness": 170.17,
+     "glare_fraction": 0.0078,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.4,
+    "total_ms": 191,
+    "ocr_lines": [
+     "P8"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "P8",
+    "seg_code": ""
+   },
+   {
+    "id": "display_P8__blur_mild",
+    "kind": "display",
+    "degradation": "blur_mild",
+    "ok": true,
+    "pred": "P8",
+    "truth": "P8",
+    "quality": {
+     "blur_score": 30.26,
+     "brightness": 170.21,
+     "glare_fraction": 0.0022,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.8,
+    "total_ms": 168,
+    "ocr_lines": [
+     "P8"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "P8",
+    "seg_code": "P8"
+   },
+   {
+    "id": "display_P8__blur_heavy",
+    "kind": "display",
+    "degradation": "blur_heavy",
+    "ok": true,
+    "pred": "P8",
+    "truth": "P8",
+    "quality": {
+     "blur_score": 2.83,
+     "brightness": 170.3,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.9,
+    "total_ms": 172,
+    "ocr_lines": [
+     "P8"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "P8",
+    "seg_code": ""
+   },
+   {
+    "id": "display_P8__dark",
+    "kind": "display",
+    "degradation": "dark",
+    "ok": true,
+    "pred": "P8",
+    "truth": "P8",
+    "quality": {
+     "blur_score": 872.1,
+     "brightness": 37.51,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.3,
+    "total_ms": 168,
+    "ocr_lines": [
+     "P8"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "P8",
+    "seg_code": ""
+   },
+   {
+    "id": "display_P8__glare",
+    "kind": "display",
+    "degradation": "glare",
+    "ok": false,
+    "pred": "",
+    "truth": "P8",
+    "quality": {
+     "blur_score": 384.7,
+     "brightness": 176.16,
+     "glare_fraction": 0.037,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 15.1,
+    "total_ms": 437,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_P8__rot15",
+    "kind": "display",
+    "degradation": "rot15",
+    "ok": true,
+    "pred": "P8",
+    "truth": "P8",
+    "quality": {
+     "blur_score": 612.11,
+     "brightness": 170.17,
+     "glare_fraction": 0.0074,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.5,
+    "total_ms": 188,
+    "ocr_lines": [
+     "P8"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "P8",
+    "seg_code": ""
+   },
+   {
+    "id": "display_P8__rot90",
+    "kind": "display",
+    "degradation": "rot90",
+    "ok": false,
+    "pred": "08",
+    "truth": "P8",
+    "quality": {
+     "blur_score": 740.36,
+     "brightness": 170.17,
+     "glare_fraction": 0.0078,
+     "width": 960,
+     "height": 1280,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.1,
+    "total_ms": 344,
+    "ocr_lines": [
+     "08"
+    ],
+    "ocr_rotation": 90,
+    "ocr_code": "08",
+    "seg_code": ""
+   },
+   {
+    "id": "display_F28__clean",
+    "kind": "display",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "F28",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 349.84,
+     "brightness": 162.4,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.4,
+    "total_ms": 186,
+    "ocr_lines": [
+     "F28"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "F28",
+    "seg_code": "F28"
+   },
+   {
+    "id": "display_F28__blur_mild",
+    "kind": "display",
+    "degradation": "blur_mild",
+    "ok": true,
+    "pred": "F28",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 11.11,
+     "brightness": 162.43,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.8,
+    "total_ms": 176,
+    "ocr_lines": [
+     "F28"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "F28",
+    "seg_code": "F28"
+   },
+   {
+    "id": "display_F28__blur_heavy",
+    "kind": "display",
+    "degradation": "blur_heavy",
+    "ok": true,
+    "pred": "F28",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 1.23,
+     "brightness": 162.52,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.4,
+    "total_ms": 181,
+    "ocr_lines": [
+     "F28"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "F28",
+    "seg_code": ""
+   },
+   {
+    "id": "display_F28__dark",
+    "kind": "display",
+    "degradation": "dark",
+    "ok": true,
+    "pred": "F28",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 551.25,
+     "brightness": 35.5,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.1,
+    "total_ms": 184,
+    "ocr_lines": [
+     "F28"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "F28",
+    "seg_code": ""
+   },
+   {
+    "id": "display_F28__glare",
+    "kind": "display",
+    "degradation": "glare",
+    "ok": false,
+    "pred": "",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 217.53,
+     "brightness": 171.7,
+     "glare_fraction": 0.0241,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 16.0,
+    "total_ms": 487,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_F28__rot15",
+    "kind": "display",
+    "degradation": "rot15",
+    "ok": true,
+    "pred": "F28",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 277.18,
+     "brightness": 162.41,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.3,
+    "total_ms": 200,
+    "ocr_lines": [
+     "F28"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "F28",
+    "seg_code": ""
+   },
+   {
+    "id": "display_F28__rot90",
+    "kind": "display",
+    "degradation": "rot90",
+    "ok": true,
+    "pred": "F28",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 349.7,
+     "brightness": 162.4,
+     "glare_fraction": 0.0,
+     "width": 960,
+     "height": 1280,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 16.3,
+    "total_ms": 355,
+    "ocr_lines": [
+     "-23"
+    ],
+    "ocr_rotation": 90,
+    "ocr_code": "23",
+    "seg_code": "F28"
+   },
+   {
+    "id": "display_L3__clean",
+    "kind": "display",
+    "degradation": "clean",
+    "ok": false,
+    "pred": "",
+    "truth": "L3",
+    "quality": {
+     "blur_score": 481.36,
+     "brightness": 169.45,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 16.4,
+    "total_ms": 645,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_L3__blur_mild",
+    "kind": "display",
+    "degradation": "blur_mild",
+    "ok": false,
+    "pred": "",
+    "truth": "L3",
+    "quality": {
+     "blur_score": 16.3,
+     "brightness": 169.49,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.7,
+    "total_ms": 502,
+    "ocr_lines": [
+     "\u65e5"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_L3__blur_heavy",
+    "kind": "display",
+    "degradation": "blur_heavy",
+    "ok": false,
+    "pred": "",
+    "truth": "L3",
+    "quality": {
+     "blur_score": 2.36,
+     "brightness": 169.58,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.2,
+    "total_ms": 455,
+    "ocr_lines": [
+     "\u56de"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_L3__dark",
+    "kind": "display",
+    "degradation": "dark",
+    "ok": false,
+    "pred": "",
+    "truth": "L3",
+    "quality": {
+     "blur_score": 585.4,
+     "brightness": 36.97,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.9,
+    "total_ms": 476,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_L3__glare",
+    "kind": "display",
+    "degradation": "glare",
+    "ok": false,
+    "pred": "",
+    "truth": "L3",
+    "quality": {
+     "blur_score": 329.11,
+     "brightness": 176.29,
+     "glare_fraction": 0.0323,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 15.3,
+    "total_ms": 440,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_L3__rot15",
+    "kind": "display",
+    "degradation": "rot15",
+    "ok": false,
+    "pred": "",
+    "truth": "L3",
+    "quality": {
+     "blur_score": 397.08,
+     "brightness": 169.45,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.6,
+    "total_ms": 556,
+    "ocr_lines": [
+     "\u7530"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_L3__rot90",
+    "kind": "display",
+    "degradation": "rot90",
+    "ok": false,
+    "pred": "",
+    "truth": "L3",
+    "quality": {
+     "blur_score": 482.03,
+     "brightness": 169.45,
+     "glare_fraction": 0.0,
+     "width": 960,
+     "height": 1280,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.4,
+    "total_ms": 654,
+    "ocr_lines": [
+     "\u65e5"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H6__clean",
+    "kind": "display",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "H6",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 286.7,
+     "brightness": 165.14,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.7,
+    "total_ms": 190,
+    "ocr_lines": [
+     "H6"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "H6",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H6__blur_mild",
+    "kind": "display",
+    "degradation": "blur_mild",
+    "ok": true,
+    "pred": "H6",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 8.14,
+     "brightness": 165.16,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.4,
+    "total_ms": 166,
+    "ocr_lines": [
+     "H6"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "H6",
+    "seg_code": "H6"
+   },
+   {
+    "id": "display_H6__blur_heavy",
+    "kind": "display",
+    "degradation": "blur_heavy",
+    "ok": false,
+    "pred": "",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 0.96,
+     "brightness": 165.25,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.6,
+    "total_ms": 520,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H6__dark",
+    "kind": "display",
+    "degradation": "dark",
+    "ok": true,
+    "pred": "H6",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 490.06,
+     "brightness": 36.38,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 26.6,
+    "total_ms": 220,
+    "ocr_lines": [
+     "H6"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "H6",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H6__glare",
+    "kind": "display",
+    "degradation": "glare",
+    "ok": false,
+    "pred": "",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 233.2,
+     "brightness": 174.35,
+     "glare_fraction": 0.0273,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 16.4,
+    "total_ms": 800,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H6__rot15",
+    "kind": "display",
+    "degradation": "rot15",
+    "ok": true,
+    "pred": "H6",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 228.73,
+     "brightness": 165.13,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 16.9,
+    "total_ms": 323,
+    "ocr_lines": [
+     "H6"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "H6",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H6__rot90",
+    "kind": "display",
+    "degradation": "rot90",
+    "ok": false,
+    "pred": "94",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 286.82,
+     "brightness": 165.14,
+     "glare_fraction": 0.0,
+     "width": 960,
+     "height": 1280,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 16.4,
+    "total_ms": 544,
+    "ocr_lines": [
+     "94"
+    ],
+    "ocr_rotation": 90,
+    "ocr_code": "94",
+    "seg_code": ""
+   },
+   {
+    "id": "display_E7__clean",
+    "kind": "display",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "E7",
+    "truth": "E7",
+    "quality": {
+     "blur_score": 450.53,
+     "brightness": 167.6,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 17.3,
+    "total_ms": 237,
+    "ocr_lines": [
+     "E1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "E1",
+    "seg_code": "E7"
+   },
+   {
+    "id": "display_E7__blur_mild",
+    "kind": "display",
+    "degradation": "blur_mild",
+    "ok": true,
+    "pred": "E7",
+    "truth": "E7",
+    "quality": {
+     "blur_score": 14.11,
+     "brightness": 167.64,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 22.0,
+    "total_ms": 721,
+    "ocr_lines": [
+     "\u7530"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": "E7"
+   },
+   {
+    "id": "display_E7__blur_heavy",
+    "kind": "display",
+    "degradation": "blur_heavy",
+    "ok": true,
+    "pred": "E7",
+    "truth": "E7",
+    "quality": {
+     "blur_score": 1.48,
+     "brightness": 167.74,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 17.3,
+    "total_ms": 616,
+    "ocr_lines": [
+     "\u7530"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": "E7"
+   },
+   {
+    "id": "display_E7__dark",
+    "kind": "display",
+    "degradation": "dark",
+    "ok": false,
+    "pred": "",
+    "truth": "E7",
+    "quality": {
+     "blur_score": 650.13,
+     "brightness": 36.96,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 16.5,
+    "total_ms": 480,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_E7__glare",
+    "kind": "display",
+    "degradation": "glare",
+    "ok": false,
+    "pred": "",
+    "truth": "E7",
+    "quality": {
+     "blur_score": 381.34,
+     "brightness": 175.42,
+     "glare_fraction": 0.0321,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 16.0,
+    "total_ms": 470,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_E7__rot15",
+    "kind": "display",
+    "degradation": "rot15",
+    "ok": true,
+    "pred": "E7",
+    "truth": "E7",
+    "quality": {
+     "blur_score": 392.66,
+     "brightness": 167.61,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.7,
+    "total_ms": 187,
+    "ocr_lines": [
+     "E7"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "E7",
+    "seg_code": ""
+   },
+   {
+    "id": "display_E7__rot90",
+    "kind": "display",
+    "degradation": "rot90",
+    "ok": true,
+    "pred": "E7",
+    "truth": "E7",
+    "quality": {
+     "blur_score": 450.95,
+     "brightness": 167.6,
+     "glare_fraction": 0.0,
+     "width": 960,
+     "height": 1280,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.0,
+    "total_ms": 345,
+    "ocr_lines": [
+     "08"
+    ],
+    "ocr_rotation": 90,
+    "ocr_code": "08",
+    "seg_code": "E7"
+   },
+   {
+    "id": "display_P1__clean",
+    "kind": "display",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "P1",
+    "truth": "P1",
+    "quality": {
+     "blur_score": 369.71,
+     "brightness": 166.74,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 16.4,
+    "total_ms": 187,
+    "ocr_lines": [
+     "P1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "P1",
+    "seg_code": ""
+   },
+   {
+    "id": "display_P1__blur_mild",
+    "kind": "display",
+    "degradation": "blur_mild",
+    "ok": true,
+    "pred": "P1",
+    "truth": "P1",
+    "quality": {
+     "blur_score": 10.88,
+     "brightness": 166.77,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.9,
+    "total_ms": 168,
+    "ocr_lines": [
+     "P1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "P1",
+    "seg_code": "P1"
+   },
+   {
+    "id": "display_P1__blur_heavy",
+    "kind": "display",
+    "degradation": "blur_heavy",
+    "ok": true,
+    "pred": "P1",
+    "truth": "P1",
+    "quality": {
+     "blur_score": 1.07,
+     "brightness": 166.86,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.7,
+    "total_ms": 166,
+    "ocr_lines": [
+     "PI"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "P1",
+    "seg_code": "P1"
+   },
+   {
+    "id": "display_P1__dark",
+    "kind": "display",
+    "degradation": "dark",
+    "ok": true,
+    "pred": "P1",
+    "truth": "P1",
+    "quality": {
+     "blur_score": 616.03,
+     "brightness": 36.9,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.4,
+    "total_ms": 177,
+    "ocr_lines": [
+     "P1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "P1",
+    "seg_code": ""
+   },
+   {
+    "id": "display_P1__glare",
+    "kind": "display",
+    "degradation": "glare",
+    "ok": false,
+    "pred": "",
+    "truth": "P1",
+    "quality": {
+     "blur_score": 352.26,
+     "brightness": 175.27,
+     "glare_fraction": 0.0314,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 15.2,
+    "total_ms": 457,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_P1__rot15",
+    "kind": "display",
+    "degradation": "rot15",
+    "ok": false,
+    "pred": "",
+    "truth": "P1",
+    "quality": {
+     "blur_score": 313.29,
+     "brightness": 166.75,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.4,
+    "total_ms": 444,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_P1__rot90",
+    "kind": "display",
+    "degradation": "rot90",
+    "ok": false,
+    "pred": "",
+    "truth": "P1",
+    "quality": {
+     "blur_score": 370.19,
+     "brightness": 166.73,
+     "glare_fraction": 0.0,
+     "width": 960,
+     "height": 1280,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.9,
+    "total_ms": 463,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H3__clean",
+    "kind": "display",
+    "degradation": "clean",
+    "ok": false,
+    "pred": "",
+    "truth": "H3",
+    "quality": {
+     "blur_score": 346.33,
+     "brightness": 168.21,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 16.3,
+    "total_ms": 477,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H3__blur_mild",
+    "kind": "display",
+    "degradation": "blur_mild",
+    "ok": false,
+    "pred": "",
+    "truth": "H3",
+    "quality": {
+     "blur_score": 10.89,
+     "brightness": 168.24,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.6,
+    "total_ms": 460,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H3__blur_heavy",
+    "kind": "display",
+    "degradation": "blur_heavy",
+    "ok": false,
+    "pred": "",
+    "truth": "H3",
+    "quality": {
+     "blur_score": 1.51,
+     "brightness": 168.34,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.4,
+    "total_ms": 773,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H3__dark",
+    "kind": "display",
+    "degradation": "dark",
+    "ok": false,
+    "pred": "",
+    "truth": "H3",
+    "quality": {
+     "blur_score": 500.59,
+     "brightness": 36.77,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 18.9,
+    "total_ms": 559,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H3__glare",
+    "kind": "display",
+    "degradation": "glare",
+    "ok": false,
+    "pred": "",
+    "truth": "H3",
+    "quality": {
+     "blur_score": 334.31,
+     "brightness": 175.87,
+     "glare_fraction": 0.0316,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 15.4,
+    "total_ms": 459,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H3__rot15",
+    "kind": "display",
+    "degradation": "rot15",
+    "ok": false,
+    "pred": "",
+    "truth": "H3",
+    "quality": {
+     "blur_score": 283.03,
+     "brightness": 168.2,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.9,
+    "total_ms": 454,
+    "ocr_lines": [
+     "\u7530"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_H3__rot90",
+    "kind": "display",
+    "degradation": "rot90",
+    "ok": false,
+    "pred": "",
+    "truth": "H3",
+    "quality": {
+     "blur_score": 347.04,
+     "brightness": 168.21,
+     "glare_fraction": 0.0,
+     "width": 960,
+     "height": 1280,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.9,
+    "total_ms": 471,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_F14__clean",
+    "kind": "display",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "F14",
+    "truth": "F14",
+    "quality": {
+     "blur_score": 729.35,
+     "brightness": 167.56,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 16.0,
+    "total_ms": 178,
+    "ocr_lines": [
+     "F14"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "F14",
+    "seg_code": ""
+   },
+   {
+    "id": "display_F14__blur_mild",
+    "kind": "display",
+    "degradation": "blur_mild",
+    "ok": true,
+    "pred": "F14",
+    "truth": "F14",
+    "quality": {
+     "blur_score": 25.18,
+     "brightness": 167.6,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.0,
+    "total_ms": 237,
+    "ocr_lines": [
+     "E14"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "E14",
+    "seg_code": "F14"
+   },
+   {
+    "id": "display_F14__blur_heavy",
+    "kind": "display",
+    "degradation": "blur_heavy",
+    "ok": false,
+    "pred": "884",
+    "truth": "F14",
+    "quality": {
+     "blur_score": 2.98,
+     "brightness": 167.7,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.1,
+    "total_ms": 208,
+    "ocr_lines": [
+     "884"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "884",
+    "seg_code": ""
+   },
+   {
+    "id": "display_F14__dark",
+    "kind": "display",
+    "degradation": "dark",
+    "ok": false,
+    "pred": "E14",
+    "truth": "F14",
+    "quality": {
+     "blur_score": 821.29,
+     "brightness": 36.23,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.2,
+    "total_ms": 182,
+    "ocr_lines": [
+     "E14"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "E14",
+    "seg_code": ""
+   },
+   {
+    "id": "display_F14__glare",
+    "kind": "display",
+    "degradation": "glare",
+    "ok": false,
+    "pred": "",
+    "truth": "F14",
+    "quality": {
+     "blur_score": 327.78,
+     "brightness": 174.21,
+     "glare_fraction": 0.0301,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 15.6,
+    "total_ms": 449,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "display_F14__rot15",
+    "kind": "display",
+    "degradation": "rot15",
+    "ok": true,
+    "pred": "F14",
+    "truth": "F14",
+    "quality": {
+     "blur_score": 637.32,
+     "brightness": 167.57,
+     "glare_fraction": 0.0,
+     "width": 1280,
+     "height": 960,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.8,
+    "total_ms": 187,
+    "ocr_lines": [
+     "F14"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "F14",
+    "seg_code": ""
+   },
+   {
+    "id": "display_F14__rot90",
+    "kind": "display",
+    "degradation": "rot90",
+    "ok": false,
+    "pred": "F19",
+    "truth": "F14",
+    "quality": {
+     "blur_score": 730.66,
+     "brightness": 167.56,
+     "glare_fraction": 0.0,
+     "width": 960,
+     "height": 1280,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 16.0,
+    "total_ms": 178,
+    "ocr_lines": [
+     "F19"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "F19",
+    "seg_code": ""
+   },
+   {
+    "id": "flat_E1__clean",
+    "kind": "flat_display",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 459.29,
+     "brightness": 20.28,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 7.5,
+    "total_ms": 99,
+    "ocr_lines": [
+     "E1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "E1",
+    "seg_code": "E1"
+   },
+   {
+    "id": "flat_E1__blur_mild",
+    "kind": "flat_display",
+    "degradation": "blur_mild",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 3.78,
+     "brightness": 20.2,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 7.6,
+    "total_ms": 100,
+    "ocr_lines": [
+     "E1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "E1",
+    "seg_code": "E1"
+   },
+   {
+    "id": "flat_E1__blur_heavy",
+    "kind": "flat_display",
+    "degradation": "blur_heavy",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 1.15,
+     "brightness": 20.19,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 7.3,
+    "total_ms": 321,
+    "ocr_lines": [
+     "E",
+     "1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": "E1"
+   },
+   {
+    "id": "flat_E1__dark",
+    "kind": "flat_display",
+    "degradation": "dark",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 412.54,
+     "brightness": 5.32,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 7.6,
+    "total_ms": 94,
+    "ocr_lines": [
+     "E1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "E1",
+    "seg_code": "E1"
+   },
+   {
+    "id": "flat_E1__glare",
+    "kind": "flat_display",
+    "degradation": "glare",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 256.89,
+     "brightness": 31.02,
+     "glare_fraction": 0.0203,
+     "width": 688,
+     "height": 560,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 7.6,
+    "total_ms": 122,
+    "ocr_lines": [
+     "E1",
+     "1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "E1",
+    "seg_code": ""
+   },
+   {
+    "id": "flat_E1__rot15",
+    "kind": "flat_display",
+    "degradation": "rot15",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 317.22,
+     "brightness": 20.26,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 7.7,
+    "total_ms": 108,
+    "ocr_lines": [
+     "E1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "E1",
+    "seg_code": ""
+   },
+   {
+    "id": "flat_E1__rot90",
+    "kind": "flat_display",
+    "degradation": "rot90",
+    "ok": true,
+    "pred": "E1",
+    "truth": "E1",
+    "quality": {
+     "blur_score": 458.08,
+     "brightness": 20.28,
+     "glare_fraction": 0.0,
+     "width": 560,
+     "height": 688,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 10.3,
+    "total_ms": 277,
+    "ocr_lines": [
+     "E1"
+    ],
+    "ocr_rotation": 90,
+    "ocr_code": "E1",
+    "seg_code": "E1"
+   },
+   {
+    "id": "flat_U4__clean",
+    "kind": "flat_display",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "U4",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 400.63,
+     "brightness": 12.26,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 10.2,
+    "total_ms": 117,
+    "ocr_lines": [
+     "60"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "60",
+    "seg_code": "U4"
+   },
+   {
+    "id": "flat_U4__blur_mild",
+    "kind": "flat_display",
+    "degradation": "blur_mild",
+    "ok": false,
+    "pred": "68",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 8.6,
+     "brightness": 12.0,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 7.9,
+    "total_ms": 113,
+    "ocr_lines": [
+     "68"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "68",
+    "seg_code": ""
+   },
+   {
+    "id": "flat_U4__blur_heavy",
+    "kind": "flat_display",
+    "degradation": "blur_heavy",
+    "ok": false,
+    "pred": "09",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 5.86,
+     "brightness": 11.91,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.5,
+    "total_ms": 111,
+    "ocr_lines": [
+     "09"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "09",
+    "seg_code": ""
+   },
+   {
+    "id": "flat_U4__dark",
+    "kind": "flat_display",
+    "degradation": "dark",
+    "ok": true,
+    "pred": "U4",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 337.22,
+     "brightness": 3.73,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 7.7,
+    "total_ms": 97,
+    "ocr_lines": [
+     "04"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "04",
+    "seg_code": "U4"
+   },
+   {
+    "id": "flat_U4__glare",
+    "kind": "flat_display",
+    "degradation": "glare",
+    "ok": false,
+    "pred": "04",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 39.27,
+     "brightness": 22.26,
+     "glare_fraction": 0.0192,
+     "width": 688,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 8.3,
+    "total_ms": 103,
+    "ocr_lines": [
+     "04"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "04",
+    "seg_code": ""
+   },
+   {
+    "id": "flat_U4__rot15",
+    "kind": "flat_display",
+    "degradation": "rot15",
+    "ok": false,
+    "pred": "09",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 289.97,
+     "brightness": 12.21,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 8.1,
+    "total_ms": 137,
+    "ocr_lines": [
+     "09"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "09",
+    "seg_code": ""
+   },
+   {
+    "id": "flat_U4__rot90",
+    "kind": "flat_display",
+    "degradation": "rot90",
+    "ok": true,
+    "pred": "U4",
+    "truth": "U4",
+    "quality": {
+     "blur_score": 402.9,
+     "brightness": 12.27,
+     "glare_fraction": 0.0,
+     "width": 560,
+     "height": 688,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 9.2,
+    "total_ms": 220,
+    "ocr_lines": [
+     "60"
+    ],
+    "ocr_rotation": 90,
+    "ocr_code": "60",
+    "seg_code": "U4"
+   },
+   {
+    "id": "flat_F28__clean",
+    "kind": "flat_display",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "F28",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 675.79,
+     "brightness": 87.94,
+     "glare_fraction": 0.0,
+     "width": 976,
+     "height": 560,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.5,
+    "total_ms": 157,
+    "ocr_lines": [
+     "628"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "628",
+    "seg_code": "F28"
+   },
+   {
+    "id": "flat_F28__blur_mild",
+    "kind": "flat_display",
+    "degradation": "blur_mild",
+    "ok": false,
+    "pred": "823",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 24.91,
+     "brightness": 87.92,
+     "glare_fraction": 0.0,
+     "width": 976,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 9.5,
+    "total_ms": 155,
+    "ocr_lines": [
+     "823"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "823",
+    "seg_code": ""
+   },
+   {
+    "id": "flat_F28__blur_heavy",
+    "kind": "flat_display",
+    "degradation": "blur_heavy",
+    "ok": true,
+    "pred": "F28",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 9.86,
+     "brightness": 87.84,
+     "glare_fraction": 0.0,
+     "width": 976,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 9.1,
+    "total_ms": 125,
+    "ocr_lines": [
+     "823"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "823",
+    "seg_code": "F28"
+   },
+   {
+    "id": "flat_F28__dark",
+    "kind": "flat_display",
+    "degradation": "dark",
+    "ok": true,
+    "pred": "F28",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 511.87,
+     "brightness": 10.32,
+     "glare_fraction": 0.0,
+     "width": 976,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 9.7,
+    "total_ms": 123,
+    "ocr_lines": [
+     "-28"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "28",
+    "seg_code": "F28"
+   },
+   {
+    "id": "flat_F28__glare",
+    "kind": "flat_display",
+    "degradation": "glare",
+    "ok": true,
+    "pred": "F28",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 121.15,
+     "brightness": 94.67,
+     "glare_fraction": 0.0264,
+     "width": 976,
+     "height": 560,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 8.8,
+    "total_ms": 125,
+    "ocr_lines": [
+     "628"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "628",
+    "seg_code": "F28"
+   },
+   {
+    "id": "flat_F28__rot15",
+    "kind": "flat_display",
+    "degradation": "rot15",
+    "ok": true,
+    "pred": "F28",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 558.94,
+     "brightness": 87.93,
+     "glare_fraction": 0.0,
+     "width": 976,
+     "height": 560,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 10.5,
+    "total_ms": 122,
+    "ocr_lines": [
+     "F28"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "F28",
+    "seg_code": ""
+   },
+   {
+    "id": "flat_F28__rot90",
+    "kind": "flat_display",
+    "degradation": "rot90",
+    "ok": true,
+    "pred": "F28",
+    "truth": "F28",
+    "quality": {
+     "blur_score": 673.77,
+     "brightness": 87.94,
+     "glare_fraction": 0.0,
+     "width": 560,
+     "height": 976,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 9.4,
+    "total_ms": 141,
+    "ocr_lines": [
+     "8"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "8",
+    "seg_code": "F28"
+   },
+   {
+    "id": "flat_H6__clean",
+    "kind": "flat_display",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "H6",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 681.89,
+     "brightness": 28.72,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 7.7,
+    "total_ms": 95,
+    "ocr_lines": [
+     "86"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "86",
+    "seg_code": "H6"
+   },
+   {
+    "id": "flat_H6__blur_mild",
+    "kind": "flat_display",
+    "degradation": "blur_mild",
+    "ok": true,
+    "pred": "H6",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 6.47,
+     "brightness": 28.5,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 7.5,
+    "total_ms": 96,
+    "ocr_lines": [
+     "86"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "86",
+    "seg_code": "H6"
+   },
+   {
+    "id": "flat_H6__blur_heavy",
+    "kind": "flat_display",
+    "degradation": "blur_heavy",
+    "ok": true,
+    "pred": "H6",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 2.36,
+     "brightness": 28.45,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 7.8,
+    "total_ms": 101,
+    "ocr_lines": [
+     "86"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "86",
+    "seg_code": "H6"
+   },
+   {
+    "id": "flat_H6__dark",
+    "kind": "flat_display",
+    "degradation": "dark",
+    "ok": true,
+    "pred": "H6",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 599.47,
+     "brightness": 6.95,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 8.2,
+    "total_ms": 93,
+    "ocr_lines": [
+     "46"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "46",
+    "seg_code": "H6"
+   },
+   {
+    "id": "flat_H6__glare",
+    "kind": "flat_display",
+    "degradation": "glare",
+    "ok": false,
+    "pred": "86",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 234.18,
+     "brightness": 37.15,
+     "glare_fraction": 0.0211,
+     "width": 688,
+     "height": 560,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 7.3,
+    "total_ms": 97,
+    "ocr_lines": [
+     "86"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "86",
+    "seg_code": ""
+   },
+   {
+    "id": "flat_H6__rot15",
+    "kind": "flat_display",
+    "degradation": "rot15",
+    "ok": false,
+    "pred": "86",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 463.39,
+     "brightness": 28.68,
+     "glare_fraction": 0.0,
+     "width": 688,
+     "height": 560,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 8.0,
+    "total_ms": 98,
+    "ocr_lines": [
+     "86"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "86",
+    "seg_code": ""
+   },
+   {
+    "id": "flat_H6__rot90",
+    "kind": "flat_display",
+    "degradation": "rot90",
+    "ok": true,
+    "pred": "H6",
+    "truth": "H6",
+    "quality": {
+     "blur_score": 682.51,
+     "brightness": 28.72,
+     "glare_fraction": 0.0,
+     "width": 560,
+     "height": 688,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 8.4,
+    "total_ms": 179,
+    "ocr_lines": [
+     "98"
+    ],
+    "ocr_rotation": 90,
+    "ocr_code": "98",
+    "seg_code": "H6"
+   },
+   {
+    "id": "plate_MXZ-4C36NA__clean",
+    "kind": "nameplate",
+    "degradation": "clean",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "MXZ",
+    "truth": "MXZ",
+    "quality": {
+     "blur_score": 1419.18,
+     "brightness": 178.5,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 12.9,
+    "total_ms": 276,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODELMXZ-4C36NA",
+     "SERIAL456113934",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MXZ-4C36NA__blur_mild",
+    "kind": "nameplate",
+    "degradation": "blur_mild",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "MXZ",
+    "truth": "MXZ",
+    "quality": {
+     "blur_score": 95.84,
+     "brightness": 178.55,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.5,
+    "total_ms": 232,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODEL MXZ-4C36NA",
+     "SERIAL456113934",
+     "VOLTS 208-230PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MXZ-4C36NA__blur_heavy",
+    "kind": "nameplate",
+    "degradation": "blur_heavy",
+    "ok": false,
+    "family_ok": false,
+    "full_model_ok": false,
+    "brand_ok": false,
+    "pred": "",
+    "truth": "MXZ",
+    "quality": {
+     "blur_score": 11.0,
+     "brightness": 178.65,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.3,
+    "total_ms": 239,
+    "ocr_lines": [
+     "dl"
+    ],
+    "ocr_rotation": 90,
+    "ocr_code": "D1",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MXZ-4C36NA__dark",
+    "kind": "nameplate",
+    "degradation": "dark",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "MXZ",
+    "truth": "MXZ",
+    "quality": {
+     "blur_score": 1110.18,
+     "brightness": 41.88,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 12.8,
+    "total_ms": 219,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODEL MXZ-4C36NA",
+     "SERIAL456113934",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MXZ-4C36NA__glare",
+    "kind": "nameplate",
+    "degradation": "glare",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "MXZ",
+    "truth": "MXZ",
+    "quality": {
+     "blur_score": 785.68,
+     "brightness": 182.75,
+     "glare_fraction": 0.0389,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 11.5,
+    "total_ms": 222,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODEL MXZ-4C36NA",
+     "SERIAL456113934",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410AF",
+     "CHARGE 6.5 LB"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MXZ-4C36NA__rot15",
+    "kind": "nameplate",
+    "degradation": "rot15",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "MXZ",
+    "truth": "MXZ",
+    "quality": {
+     "blur_score": 1177.23,
+     "brightness": 179.44,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.6,
+    "total_ms": 217,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODEL MXZ-4C36NA",
+     "SERIAL456113934",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MXZ-4C36NA__rot90",
+    "kind": "nameplate",
+    "degradation": "rot90",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "MXZ",
+    "truth": "MXZ",
+    "quality": {
+     "blur_score": 1420.06,
+     "brightness": 178.5,
+     "glare_fraction": 0.0,
+     "width": 760,
+     "height": 1100,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 12.4,
+    "total_ms": 350,
+    "ocr_lines": [
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "SERIAL456113934",
+     "MODEL MXZ-4C36NA",
+     "MITSUBISHI ELECTRIC"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_40MAQ0361__clean",
+    "kind": "nameplate",
+    "degradation": "clean",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "40MAQ",
+    "truth": "40MAQ",
+    "quality": {
+     "blur_score": 1372.44,
+     "brightness": 179.39,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.7,
+    "total_ms": 246,
+    "ocr_lines": [
+     "CARRIER",
+     "MODEL40MAQ0361",
+     "SERIAL121565442",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_40MAQ0361__blur_mild",
+    "kind": "nameplate",
+    "degradation": "blur_mild",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "40MAQ",
+    "truth": "40MAQ",
+    "quality": {
+     "blur_score": 91.06,
+     "brightness": 179.44,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 12.1,
+    "total_ms": 214,
+    "ocr_lines": [
+     "CARRIER",
+     "MODEL40MAQ0361",
+     "SERIAL121565442",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_40MAQ0361__blur_heavy",
+    "kind": "nameplate",
+    "degradation": "blur_heavy",
+    "ok": false,
+    "family_ok": false,
+    "full_model_ok": false,
+    "brand_ok": false,
+    "pred": "",
+    "truth": "40MAQ",
+    "quality": {
+     "blur_score": 10.48,
+     "brightness": 179.53,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.4,
+    "total_ms": 339,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_40MAQ0361__dark",
+    "kind": "nameplate",
+    "degradation": "dark",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "40MAQ",
+    "truth": "40MAQ",
+    "quality": {
+     "blur_score": 1077.62,
+     "brightness": 42.15,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 12.6,
+    "total_ms": 224,
+    "ocr_lines": [
+     "CARRIER",
+     "MODEL 40MAQ0361",
+     "SERIAL 121565442",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_40MAQ0361__glare",
+    "kind": "nameplate",
+    "degradation": "glare",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "40MAQ",
+    "truth": "40MAQ",
+    "quality": {
+     "blur_score": 751.29,
+     "brightness": 183.64,
+     "glare_fraction": 0.0388,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 11.9,
+    "total_ms": 243,
+    "ocr_lines": [
+     "CARRIER",
+     "MODEL 40MAQ0361",
+     "SERIAL121565442",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410AF",
+     "CHARGE 6.5 LB"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_40MAQ0361__rot15",
+    "kind": "nameplate",
+    "degradation": "rot15",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "40MAQ",
+    "truth": "40MAQ",
+    "quality": {
+     "blur_score": 1132.9,
+     "brightness": 180.31,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.0,
+    "total_ms": 335,
+    "ocr_lines": [
+     "CARRIER",
+     "MODEL40MAQ0361",
+     "SERIAL 121565442",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_40MAQ0361__rot90",
+    "kind": "nameplate",
+    "degradation": "rot90",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "40MAQ",
+    "truth": "40MAQ",
+    "quality": {
+     "blur_score": 1373.97,
+     "brightness": 179.39,
+     "glare_fraction": 0.0,
+     "width": 760,
+     "height": 1100,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.7,
+    "total_ms": 231,
+    "ocr_lines": [
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "SERIAL121565442",
+     "MODEL 40MAQ0361",
+     "CARRIER"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_FTXS25LVJU__clean",
+    "kind": "nameplate",
+    "degradation": "clean",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "FTXS",
+    "truth": "FTXS",
+    "quality": {
+     "blur_score": 1368.05,
+     "brightness": 179.57,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.0,
+    "total_ms": 230,
+    "ocr_lines": [
+     "DAIKIN",
+     "MODELFTXS25LVJU",
+     "SERIAL358743542",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_FTXS25LVJU__blur_mild",
+    "kind": "nameplate",
+    "degradation": "blur_mild",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "FTXS",
+    "truth": "FTXS",
+    "quality": {
+     "blur_score": 94.65,
+     "brightness": 179.62,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.6,
+    "total_ms": 207,
+    "ocr_lines": [
+     "DAIKIN",
+     "MODELFTXS25LVJU",
+     "SERIAL358743542",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_FTXS25LVJU__blur_heavy",
+    "kind": "nameplate",
+    "degradation": "blur_heavy",
+    "ok": false,
+    "family_ok": false,
+    "full_model_ok": false,
+    "brand_ok": false,
+    "pred": "",
+    "truth": "FTXS",
+    "quality": {
+     "blur_score": 11.61,
+     "brightness": 179.72,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.6,
+    "total_ms": 334,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_FTXS25LVJU__dark",
+    "kind": "nameplate",
+    "degradation": "dark",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "FTXS",
+    "truth": "FTXS",
+    "quality": {
+     "blur_score": 1065.59,
+     "brightness": 42.21,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.8,
+    "total_ms": 223,
+    "ocr_lines": [
+     "DAIKIN",
+     "MODEL FTXS25LVJU",
+     "SERIAL358743542",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_FTXS25LVJU__glare",
+    "kind": "nameplate",
+    "degradation": "glare",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "FTXS",
+    "truth": "FTXS",
+    "quality": {
+     "blur_score": 745.13,
+     "brightness": 183.82,
+     "glare_fraction": 0.0388,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 12.3,
+    "total_ms": 206,
+    "ocr_lines": [
+     "DAIKIN",
+     "MODEL FTXS25LVJU",
+     "SERIAL358743542",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410AF",
+     "CHARGE 6.5 LB"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_FTXS25LVJU__rot15",
+    "kind": "nameplate",
+    "degradation": "rot15",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "FTXS",
+    "truth": "FTXS",
+    "quality": {
+     "blur_score": 1128.29,
+     "brightness": 180.5,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.6,
+    "total_ms": 217,
+    "ocr_lines": [
+     "DAIKIN",
+     "MODEL FTXS25LVJU",
+     "SERIAL358743542",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_FTXS25LVJU__rot90",
+    "kind": "nameplate",
+    "degradation": "rot90",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "FTXS",
+    "truth": "FTXS",
+    "quality": {
+     "blur_score": 1368.93,
+     "brightness": 179.57,
+     "glare_fraction": 0.0,
+     "width": 760,
+     "height": 1100,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 12.0,
+    "total_ms": 244,
+    "ocr_lines": [
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "SERIAL358743542",
+     "MODEL FTXS25LVJU",
+     "DAIKIN"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_PUZ-A42NKA7__clean",
+    "kind": "nameplate",
+    "degradation": "clean",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "PUZ",
+    "truth": "PUZ",
+    "quality": {
+     "blur_score": 1426.15,
+     "brightness": 178.47,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 12.8,
+    "total_ms": 233,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODELPUZ-A42NKA7",
+     "SERIAL 780386152",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_PUZ-A42NKA7__blur_mild",
+    "kind": "nameplate",
+    "degradation": "blur_mild",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "PUZ",
+    "truth": "PUZ",
+    "quality": {
+     "blur_score": 96.47,
+     "brightness": 178.52,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.1,
+    "total_ms": 232,
+    "ocr_lines": [
+     "MITSUBISHIELECTRIC",
+     "MODELPUZ-A42NKA7",
+     "SERIAL780386152",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_PUZ-A42NKA7__blur_heavy",
+    "kind": "nameplate",
+    "degradation": "blur_heavy",
+    "ok": false,
+    "family_ok": false,
+    "full_model_ok": false,
+    "brand_ok": false,
+    "pred": "",
+    "truth": "PUZ",
+    "quality": {
+     "blur_score": 11.3,
+     "brightness": 178.62,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.6,
+    "total_ms": 244,
+    "ocr_lines": [
+     "ill"
+    ],
+    "ocr_rotation": 90,
+    "ocr_code": "I11",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_PUZ-A42NKA7__dark",
+    "kind": "nameplate",
+    "degradation": "dark",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "PUZ",
+    "truth": "PUZ",
+    "quality": {
+     "blur_score": 1114.07,
+     "brightness": 41.88,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 14.0,
+    "total_ms": 220,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODEL PUZ-A42NKA7",
+     "SERIAL 780386152",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_PUZ-A42NKA7__glare",
+    "kind": "nameplate",
+    "degradation": "glare",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "PUZ",
+    "truth": "PUZ",
+    "quality": {
+     "blur_score": 789.91,
+     "brightness": 182.73,
+     "glare_fraction": 0.0388,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 12.2,
+    "total_ms": 206,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODEL PUZ-A42NKA7",
+     "SERIAL780386152",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410AF",
+     "CHARGE 6.5 LB"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_PUZ-A42NKA7__rot15",
+    "kind": "nameplate",
+    "degradation": "rot15",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "PUZ",
+    "truth": "PUZ",
+    "quality": {
+     "blur_score": 1181.8,
+     "brightness": 179.4,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.1,
+    "total_ms": 214,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODEL PUZ-A42NKA7",
+     "SERIAL 780386152",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_PUZ-A42NKA7__rot90",
+    "kind": "nameplate",
+    "degradation": "rot90",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "PUZ",
+    "truth": "PUZ",
+    "quality": {
+     "blur_score": 1426.99,
+     "brightness": 178.47,
+     "glare_fraction": 0.0,
+     "width": 760,
+     "height": 1100,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 12.5,
+    "total_ms": 233,
+    "ocr_lines": [
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "SERIAL 780386152",
+     "MODEL PUZ-A42NKA7",
+     "MITSUBISHI ELECTRIC"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_38MAQB361__clean",
+    "kind": "nameplate",
+    "degradation": "clean",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "38MAQ",
+    "truth": "38MAQ",
+    "quality": {
+     "blur_score": 1382.03,
+     "brightness": 179.32,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 12.2,
+    "total_ms": 225,
+    "ocr_lines": [
+     "CARRIER",
+     "MODEL 38MAQB361",
+     "SERIAL266165515",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_38MAQB361__blur_mild",
+    "kind": "nameplate",
+    "degradation": "blur_mild",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "38MAQ",
+    "truth": "38MAQ",
+    "quality": {
+     "blur_score": 91.94,
+     "brightness": 179.38,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.3,
+    "total_ms": 213,
+    "ocr_lines": [
+     "CARRIER",
+     "MODEL38MAQB361",
+     "SERIAL266165515",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_38MAQB361__blur_heavy",
+    "kind": "nameplate",
+    "degradation": "blur_heavy",
+    "ok": false,
+    "family_ok": false,
+    "full_model_ok": false,
+    "brand_ok": false,
+    "pred": "",
+    "truth": "38MAQ",
+    "quality": {
+     "blur_score": 10.0,
+     "brightness": 179.47,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.4,
+    "total_ms": 386,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_38MAQB361__dark",
+    "kind": "nameplate",
+    "degradation": "dark",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "38MAQ",
+    "truth": "38MAQ",
+    "quality": {
+     "blur_score": 1080.92,
+     "brightness": 42.13,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.6,
+    "total_ms": 280,
+    "ocr_lines": [
+     "CARRIER",
+     "MODEL 38MAQB361",
+     "SERIAL 266165515",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_38MAQB361__glare",
+    "kind": "nameplate",
+    "degradation": "glare",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "38MAQ",
+    "truth": "38MAQ",
+    "quality": {
+     "blur_score": 751.8,
+     "brightness": 183.58,
+     "glare_fraction": 0.0388,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 12.6,
+    "total_ms": 224,
+    "ocr_lines": [
+     "CARRIER",
+     "MODEL 38MAQB361",
+     "SERIAL 266165515",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410AF",
+     "CHARGE 6.5 LB"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_38MAQB361__rot15",
+    "kind": "nameplate",
+    "degradation": "rot15",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "38MAQ",
+    "truth": "38MAQ",
+    "quality": {
+     "blur_score": 1146.82,
+     "brightness": 180.24,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.5,
+    "total_ms": 218,
+    "ocr_lines": [
+     "CARRIER",
+     "MODEL38MAQB361",
+     "SERIAL 266165515",
+     "VOLTS 208-230PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_38MAQB361__rot90",
+    "kind": "nameplate",
+    "degradation": "rot90",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "38MAQ",
+    "truth": "38MAQ",
+    "quality": {
+     "blur_score": 1382.8,
+     "brightness": 179.32,
+     "glare_fraction": 0.0,
+     "width": 760,
+     "height": 1100,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.9,
+    "total_ms": 216,
+    "ocr_lines": [
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "SERIAL 266165515",
+     "MODEL 38MAQB361",
+     "CARRIER"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MSZ-FH12NA__clean",
+    "kind": "nameplate",
+    "degradation": "clean",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "MSZ-FH",
+    "truth": "MSZ-FH",
+    "quality": {
+     "blur_score": 1418.36,
+     "brightness": 178.5,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.9,
+    "total_ms": 223,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODELMSZ-FH12NA",
+     "SERIAL843520318",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MSZ-FH12NA__blur_mild",
+    "kind": "nameplate",
+    "degradation": "blur_mild",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "MSZ-FH",
+    "truth": "MSZ-FH",
+    "quality": {
+     "blur_score": 97.97,
+     "brightness": 178.56,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 12.0,
+    "total_ms": 215,
+    "ocr_lines": [
+     "MITSUBISHIELECTRIC",
+     "MODELMSZ-FH12NA",
+     "SERIAL843520318",
+     "VOLTS 208-230PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MSZ-FH12NA__blur_heavy",
+    "kind": "nameplate",
+    "degradation": "blur_heavy",
+    "ok": false,
+    "family_ok": false,
+    "full_model_ok": false,
+    "brand_ok": false,
+    "pred": "",
+    "truth": "MSZ-FH",
+    "quality": {
+     "blur_score": 11.27,
+     "brightness": 178.65,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": true,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 11.1,
+    "total_ms": 352,
+    "ocr_lines": [
+     "dl"
+    ],
+    "ocr_rotation": 270,
+    "ocr_code": "D1",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MSZ-FH12NA__dark",
+    "kind": "nameplate",
+    "degradation": "dark",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "MSZ-FH",
+    "truth": "MSZ-FH",
+    "quality": {
+     "blur_score": 1107.78,
+     "brightness": 41.89,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": false
+    },
+    "usable": false,
+    "flags": {
+     "blur": false,
+     "dark": true,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.4,
+    "total_ms": 227,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODELMSZ-FH12NA",
+     "SERIAL 843520318",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MSZ-FH12NA__glare",
+    "kind": "nameplate",
+    "degradation": "glare",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "MSZ-FH",
+    "truth": "MSZ-FH",
+    "quality": {
+     "blur_score": 785.49,
+     "brightness": 182.76,
+     "glare_fraction": 0.0388,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": true
+    },
+    "quality_ms": 11.9,
+    "total_ms": 205,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODEL MSZ-FH12NA",
+     "SERIAL843520318",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410AF",
+     "CHARGE 6.5 LB"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MSZ-FH12NA__rot15",
+    "kind": "nameplate",
+    "degradation": "rot15",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "MSZ-FH",
+    "truth": "MSZ-FH",
+    "quality": {
+     "blur_score": 1188.19,
+     "brightness": 179.44,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 13.2,
+    "total_ms": 212,
+    "ocr_lines": [
+     "MITSUBISHI ELECTRIC",
+     "MODEL MSZ-FH12NA",
+     "SERIAL843520318",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "plate_MSZ-FH12NA__rot90",
+    "kind": "nameplate",
+    "degradation": "rot90",
+    "ok": true,
+    "family_ok": true,
+    "full_model_ok": true,
+    "brand_ok": true,
+    "pred": "MSZ-FH",
+    "truth": "MSZ-FH",
+    "quality": {
+     "blur_score": 1418.93,
+     "brightness": 178.51,
+     "glare_fraction": 0.0,
+     "width": 760,
+     "height": 1100,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 12.0,
+    "total_ms": 219,
+    "ocr_lines": [
+     "MAX FUSE 25 A MIN CIRCUIT AMPS 18.1",
+     "REFRIGERANT R410A FACTORY CHARGE 6.5 LB",
+     "VOLTS 208-230 PH 1 HZ 60",
+     "SERIAL843520318",
+     "MODELMSZ-FH12NA",
+     "MITSUBISHI ELECTRIC"
+    ],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "rusted_0__clean",
+    "kind": "rusted",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "//",
+    "truth": "",
+    "image_type": "other",
+    "quality": {
+     "blur_score": 602.21,
+     "brightness": 92.05,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.9,
+    "total_ms": 319,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "rusted_1__clean",
+    "kind": "rusted",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "//",
+    "truth": "",
+    "image_type": "other",
+    "quality": {
+     "blur_score": 600.68,
+     "brightness": 96.32,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.4,
+    "total_ms": 322,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "rusted_2__clean",
+    "kind": "rusted",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "//",
+    "truth": "",
+    "image_type": "other",
+    "quality": {
+     "blur_score": 617.76,
+     "brightness": 95.54,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.9,
+    "total_ms": 325,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   },
+   {
+    "id": "rusted_3__clean",
+    "kind": "rusted",
+    "degradation": "clean",
+    "ok": true,
+    "pred": "//",
+    "truth": "",
+    "image_type": "other",
+    "quality": {
+     "blur_score": 568.87,
+     "brightness": 94.75,
+     "glare_fraction": 0.0,
+     "width": 1100,
+     "height": 760,
+     "usable": true
+    },
+    "usable": true,
+    "flags": {
+     "blur": false,
+     "dark": false,
+     "over": false,
+     "glare": false
+    },
+    "quality_ms": 15.0,
+    "total_ms": 320,
+    "ocr_lines": [],
+    "ocr_rotation": 0,
+    "ocr_code": "",
+    "seg_code": ""
+   }
+  ]
+ },
+ "gemini": {
+  "model": "gemini-3.7-flash",
+  "calls_attempted": 1,
+  "rows": [
+   {
+    "id": "display_U4__clean",
+    "vlm_failed": true,
+    "detail": [
+     "Gemini unavailable (Gemini unavailable: 504 DEADLINE_EXCEEDED. {'error': {'code': 504, 'message': 'Deadline expired before operation could complete.', 'status': 'DEADLINE_EXCEEDED'}}); result is from local OCR only - verify on the unit."
+    ]
+   }
+  ],
+  "stopped": "VLM unavailable on display_U4__clean: [\"Gemini unavailable (Gemini unavailable: 504 DEADLINE_EXCEEDED. {'error': {'code': 504, 'message': 'Deadline expired before operation could complete.', 'status': 'DEADLINE_EXCEEDED'}}); result is from local OCR only - verify on the unit.\"]",
+  "n": 0,
+  "correct": 0
+ }
+}
